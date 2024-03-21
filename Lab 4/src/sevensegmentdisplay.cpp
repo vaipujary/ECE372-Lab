@@ -3,7 +3,7 @@
 // Assignment:  Lab 4
 //
 // Description: 
-//
+//      https://www.electronicwings.com/arduino/7-segment-display-interfacing-with-arduino-uno
 // Requirements:
 //      Use PORTC pins as outputs to drive the seven segment display
 //      configured in a common cathode mode.
@@ -21,7 +21,7 @@ void initSevenSegment() {
 void sevenSegmentDisplay(unsigned int a) {
     switch(a) {
     case 0:
-    
+
     break;
     case 1:
     break;
