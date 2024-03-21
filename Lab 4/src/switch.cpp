@@ -24,8 +24,8 @@ void initSwitchPD0(){
     DDRD &= ~(1 << DDD0);  // Sets pin direction as an input (pin D0)
 
     // External Interrupts must be enabled for pin PD0
-    EIFR |= (1 << INTF0); // mask
-    EIMSK |= (1 << INT0); // flag
+    EIFR |= (1 << INTF0); // flag
+    EIMSK |= (1 << INT0); // mask
 }
 
 void turnOffImsk() {
