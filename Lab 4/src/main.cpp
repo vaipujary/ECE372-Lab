@@ -32,6 +32,7 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
     initSevenSegment();
     initPWMTimer3();
     initPWMTimer4();
+    initSwitchPD0();
     sei(); // Enable global interrupts.
     
 
@@ -42,18 +43,24 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
       switch (myButtonState) {
 
         case waitPress:    // the "natural" state
+          myButtonState = debouncePress;
         break;
 
         case debouncePress:
+          myButtonState = wait_release;
         break;
 
         case waitRelease: //waits for button to be released after pressed
+          myButtonState = debounceRelease;
         break;
 
-        case debounceRelease:      
+        case debounceRelease: 
+          myButtonState = waitPress;     
         break;
         
         case alarm:
+        
+          myButtonState = waitPress;
         break;
 
         default:
@@ -66,6 +73,7 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
 void countdown(){
   int i=9;
   while(i>=0){
+    sevenSegmentDisplay(i);
     i=i-1;
   }
 }
