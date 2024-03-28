@@ -32,6 +32,7 @@ typedef enum
 
 volatile buttonState myButtonState = waitPress;
 volatile int flip = 1;
+volatile int i = 9;
 int main()
 {
   initADC();
@@ -66,7 +67,7 @@ int main()
       break;
 
     case debouncePress:
-      int i = 9;
+      i = 9;
       while (i >= 0)
       {
         sevenSegmentDisplay(i);
