@@ -48,12 +48,12 @@ int main()
   {
     if (flip == 1)
     { // clockwise
-
+    // voltage for potentionmeter=5V 
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
-      
+      //voltage for potentionmeter=0V
       // writeString("CCwise");
     }
 
@@ -66,7 +66,12 @@ int main()
       break;
 
     case debouncePress:
-      countdown();
+      int i = 9;
+      while (i >= 0)
+      {
+        sevenSegmentDisplay(i);
+        i = i - 1;
+      }
       myButtonState = waitRelease;
       break;
 
@@ -88,15 +93,6 @@ int main()
     }
   }
   return 0;
-}
-void countdown()
-{
-  int i = 9;
-  while (i >= 0)
-  {
-    sevenSegmentDisplay(i);
-    i = i - 1;
-  }
 }
 ISR(PCINT0_vect)
 {
