@@ -26,6 +26,8 @@ void initSwitchPD0(){
     // External Interrupts must be enabled for pin PD0
     EIFR |= (1 << INTF0); // flag
     EIMSK |= (1 << INT0); // mask
+    EICRA &= ~(1<<ISC01);
+    EICRA |=(1<<ISC00);
 }
 
 void turnOffImsk() {
