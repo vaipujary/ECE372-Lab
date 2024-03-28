@@ -28,8 +28,7 @@ typedef enum
   waitPress,
   debouncePress,
   waitRelease,
-  debounceRelease,
-  alarm
+  debounceRelease
 } buttonState; // Define a set of states that can be used in the state machine using an enum.
 
 volatile buttonState myButtonState = waitPress;
@@ -59,15 +58,15 @@ int main()
     potentiometer_voltage = result * (4.586 / 1024.0);
 
     if (flip == 1)
-    { // clockwise
-      changeDutyCycle(768);
+    {                       // clockwise
+      changeDutyCycle(768); //.75% duty cycle
       // voltage for potentionmeter=5V
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
       // voltage for potentionmeter=0V
-      changeDutyCycle(255);
+      changeDutyCycle(255); //.25% duty cycle
       // writeString("CCwise");
     }
 
@@ -97,12 +96,6 @@ int main()
     case debounceRelease:
       myButtonState = waitPress;
       break;
-
-    case alarm:
-
-      myButtonState = waitPress;
-      break;
-
     default:
       break;
     }
