@@ -19,6 +19,7 @@
   #include "adc.h"
   #include "sevensegmentdisplay.h"
   #include <avr/interrupt.h>
+  #include <stdio.h>
 
 // A state machine is used to implement the bulk of the functionality of the program  
 typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} buttonState; // Define a set of states that can be used in the state machine using an enum.
