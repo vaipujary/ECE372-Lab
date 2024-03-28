@@ -51,6 +51,7 @@ int main()
   {
     if (flip == 1)
     { // clockwise
+      changeDutyCycle(255);
     // voltage for potentionmeter=5V 
       // writeString("Clockwise");
     }

@@ -6,6 +6,7 @@
 void changeDutyCycle(unsigned int OCRval)
 {                   // Pass in the desired OCR value. 1023 for max output, 0 for no output.
     OCR3A = OCRval; // Calculate OCR3A based on PWM period. Hardcoded for now, later change to use ADC registers
+    //1023*duty cyle amount
 }
 
 void initPWMTimer3()
