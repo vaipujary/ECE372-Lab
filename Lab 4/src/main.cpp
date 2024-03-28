@@ -24,7 +24,7 @@
 typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} buttonState; // Define a set of states that can be used in the state machine using an enum.
 
   volatile buttonState myButtonState = waitPress;
-
+  volatile int flip=1;
   int main(){
     initADC();
     initTimer1();
@@ -37,7 +37,19 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
     
 
   // while loop
-    while (1) { // An infinite while loop must be present.
+    while (1) {
+      if(flip==1){//clockwise
+        turnOnLEDWithChar(count);
+        delayMs(LONG_DELAY);
+        moveCursor(1, 0);
+        //writeString("Clockwise");
+      }
+      else if(flip==2){//counterclockwise
+        turnOnLEDWithChar(count);
+        delayMs(SHORT_DELAY);
+        moveCursor(1, 0);
+        //writeString("CCwise");
+      } 
 
       // State machine logic
       switch (myButtonState) {
@@ -47,7 +59,8 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
         break;
 
         case debouncePress:
-          myButtonState = wait_release;
+          countdown();
+          myButtonState = waitRelease;
         break;
 
         case waitRelease: //waits for button to be released after pressed
@@ -59,7 +72,7 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
         break;
         
         case alarm:
-        
+
           myButtonState = waitPress;
         break;
 
