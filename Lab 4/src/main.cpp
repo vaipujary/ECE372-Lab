@@ -29,6 +29,9 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
     initADC();
     initTimer1();
     initTimer0();
+    initSevenSegment();
+    initPWMTimer3();
+    initPWMTimer4();
     sei(); // Enable global interrupts.
     
 
@@ -48,6 +51,9 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
         break;
 
         case debounceRelease:      
+        break;
+        
+        case alarm:
         break;
 
         default:
