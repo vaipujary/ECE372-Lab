@@ -1,5 +1,7 @@
 // Authors:     Group 3
 // Date:        04/04/2024
+// Authors:     Group 3
+// Date:        04/04/2024
 // Assignment:  Lab 4
 //
 // Description:
@@ -49,13 +51,11 @@ int main()
   {
     if (flip == 1)
     { // clockwise
-      changeDutyCycle(0x3,0x4);
     // voltage for potentionmeter=5V 
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
-      changeDutyCycle(0x3,0x4);
       //voltage for potentionmeter=0V
       // writeString("CCwise");
     }
