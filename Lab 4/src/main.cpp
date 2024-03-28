@@ -49,11 +49,13 @@ int main()
   {
     if (flip == 1)
     { // clockwise
+      changeDutyCycle(0x3,0x4);
     // voltage for potentionmeter=5V 
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
+      changeDutyCycle(0x3,0x4);
       //voltage for potentionmeter=0V
       // writeString("CCwise");
     }
@@ -63,7 +65,7 @@ int main()
     {
 
     case waitPress: // the "natural" state
-      myButtonState = debouncePress;
+
       break;
 
     case debouncePress:
@@ -71,6 +73,7 @@ int main()
       while (i >= 0)
       {
         sevenSegmentDisplay(i);
+        delayMs(1000);
         i = i - 1;
       }
       myButtonState = waitRelease;
