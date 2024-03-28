@@ -10,19 +10,6 @@
 //      4.A state machine is used to implement the bulk of the functionality
 //      of the program
 //----------------------------------------------------------------------//
-<<<<<<< HEAD
-  
-  #include <Arduino.h>
-  #include <avr/io.h>
-  #include "switch.h"
-  #include "timer.h"
-  #include "pwm.h"
-  #include "adc.h"
-  #include "sevensegmentdisplay.h"
-  #include <avr/interrupt.h>
-  #include <stdio.h>
-=======
->>>>>>> 3e9f5bb7ce7269b25a4559e0896ad534a5339a62
 
 #include <Arduino.h>
 #include <avr/io.h>
