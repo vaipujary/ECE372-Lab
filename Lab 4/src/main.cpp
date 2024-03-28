@@ -26,7 +26,7 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
   volatile buttonState myButtonState = waitPress;
 
   int main(){
-
+    initADC();
     initTimer1();
     initTimer0();
     sei(); // Enable global interrupts.
@@ -57,7 +57,24 @@ typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} but
     }
     return 0;
   }
-
-// ISR(){
-//  // TODO
-// }
+void countdown(){
+  int i=9;
+  while(i>=0){
+    i=i-1;
+  }
+}
+ISR(PCINT0_vect){
+  if(state == wait_press){
+    state = debounce_press;
+    }
+  else if(state == wait_release){
+    
+    if(flip==1){
+      flip=2;
+    }
+    else{
+      flip=1;
+    }
+    state = debounce_release;
+  } 
+}
