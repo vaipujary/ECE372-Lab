@@ -51,13 +51,14 @@ int main()
   {
     if (flip == 1)
     { // clockwise
-      changeDutyCycle(255);
+      changeDutyCycle(768);
     // voltage for potentionmeter=5V 
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
       //voltage for potentionmeter=0V
+      changeDutyCycle(255);
       // writeString("CCwise");
     }
 
