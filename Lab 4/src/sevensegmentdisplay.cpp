@@ -1,8 +1,8 @@
-// Authors:     Group 3   
-// Date:        04/04/2024   
+// Authors:     Group 3
+// Date:        04/04/2024
 // Assignment:  Lab 4
 //
-// Description: 
+// Description:
 //      https://www.electronicwings.com/arduino/7-segment-display-interfacing-with-arduino-uno
 // Requirements:
 //      Use PORTC pins as outputs to drive the seven segment display
@@ -14,128 +14,87 @@
 #include "timer.h"
 #include "switch.h"
 
-void initSevenSegment() {
-    DDRC |= (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC3) | (1 << DDC4) | (1 << DDC5) | (1 << DDC6) | (1 << DDC7);
-}
-
-void sevenSegmentDisplay(int a)	/* Function for displaying number (0-9) */
+void initSevenSegment()
 {
-  switch(a)
+  DDRC |= (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC3) | (1 << DDC4) | (1 << DDC5) | (1 << DDC6) | (1 << DDC7);
+}
+
+void sevenSegmentDisplay(int a) /* Function for displaying number (0-9) */
+{
+  switch (a)
   {
-    case 0:
-    digitalWrite(disp_pin[0], LOW);	/* Drive disp_pin[0] to LOW */
-    digitalWrite(disp_pin[1], LOW);	/* Driving LOW turns on LED segment for common anode display */
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], LOW);
-    digitalWrite(disp_pin[5], LOW);
-    digitalWrite(disp_pin[6], HIGH); 
+  case 0:
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) |
+             (1 << PORTC3) | (1 << PORTC4) | (1 << PORTC5);
+    PORTC &= ~(1 << PORTC6);
     break;
-    case 1:
-    digitalWrite(disp_pin[0], HIGH);	/* Drive disp_pin[7] to HIGH */
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], HIGH);	/* Driving HIGH turns off LED segment for common anode display */
-    digitalWrite(disp_pin[4], HIGH);
-    digitalWrite(disp_pin[5], HIGH);
-    digitalWrite(disp_pin[6], HIGH);
+  case 1:
+    PORTC |= (1 << PORTC1) | (1 << PORTC2);
+
+    PORTC &= ~(1 << PORTC0) &
+             ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
     break;
-    case 2:
-    digitalWrite(disp_pin[0], LOW);
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], HIGH);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], LOW);
-    digitalWrite(disp_pin[5], HIGH);
-    digitalWrite(disp_pin[6], LOW);
+  case 2:
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) |
+             (1 << PORTC4) | (1 << PORTC6) |
+             (1 << PORTC3);
+    PORTC &= ~(1 << PORTC2) & ~(1 << PORTC5);
     break;
-    case 3:
-    digitalWrite(disp_pin[0], LOW);
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], HIGH);
-    digitalWrite(disp_pin[5], HIGH);
-    digitalWrite(disp_pin[6], LOW);
+  case 3:
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) |
+             (1 << PORTC2) | (1 << PORTC3) |
+             (1 << PORTC6);
+    PORTC &= ~(1 << PORTC4) & ~(1 << PORTC5);
     break;
-    case 4:
-    digitalWrite(disp_pin[0], HIGH);
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], HIGH);
-    digitalWrite(disp_pin[4], HIGH);
-    digitalWrite(disp_pin[5], LOW);
-    digitalWrite(disp_pin[6], LOW);
+  case 4:
+    PORTC |= (1 << PORTC1) | (1 << PORTC2) |
+             (1 << PORTC5) | (1 << PORTC6);
+    PORTC &= ~(1 << PORTC0) & ~(1 << PORTC3) & ~(1 << PORTC4);
     break;
-    case 5:
-    digitalWrite(disp_pin[0], LOW);
-    digitalWrite(disp_pin[1], HIGH);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], HIGH);
-    digitalWrite(disp_pin[5], LOW);
-    digitalWrite(disp_pin[6], LOW);
+  case 5:
+    PORTC |= (1 << PORTC0) | (1 << PORTC2) |
+             (1 << PORTC3) | (1 << PORTC5) |
+             (1 << PORTC6);
+    PORTC &= ~(1 << PORTC1) & ~(1 << PORTC4);
     break;
-    case 6:
-    digitalWrite(disp_pin[0], LOW);
-    digitalWrite(disp_pin[1], HIGH);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], LOW);
-    digitalWrite(disp_pin[5], LOW);
-    digitalWrite(disp_pin[6], LOW);
+  case 6:
+    PORTC &= ~(1 << PORTC1);
+    PORTC |= (1 << PORTC0) | (1 << PORTC2) | (1 << PORTC3);
+    PORTC |= (1 << PORTC4) | (1 << PORTC5) | (1 << PORTC6);
     break;
-    case 7:
-    digitalWrite(disp_pin[0], LOW);
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], HIGH);
-    digitalWrite(disp_pin[4], HIGH);
-    digitalWrite(disp_pin[5], HIGH);
-    digitalWrite(disp_pin[6], HIGH);
+  case 7:
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2);
+
+    PORTC &= ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
     break;
-    case 8:
-    digitalWrite(disp_pin[0], LOW);
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], LOW);
-    digitalWrite(disp_pin[5], LOW);
-    digitalWrite(disp_pin[6], LOW);
+  case 8:
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) |
+             (1 << PORTC3) | (1 << PORTC4) | (1 << PORTC5) | (1 << PORTC6);
     break;
-    case 9:
-    digitalWrite(disp_pin[0], LOW);
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], HIGH);
-    digitalWrite(disp_pin[5], LOW);
-    digitalWrite(disp_pin[6], LOW);
+  case 9:
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) |
+             (1 << PORTC3) | (1 << PORTC5) | (1 << PORTC6);
+
+    PORTC &= ~(1 << PORTC4);
     break;
-    default:
-    digitalWrite(disp_pin[0], HIGH);
-    digitalWrite(disp_pin[1], LOW);
-    digitalWrite(disp_pin[2], LOW);
-    digitalWrite(disp_pin[3], LOW);
-    digitalWrite(disp_pin[4], LOW);
-    digitalWrite(disp_pin[5], HIGH);
-    digitalWrite(disp_pin[6], LOW);
+  default:
+    PORTC &= ~(1 << PORTC0) & ~(1 << PORTC1) & ~(1 << PORTC2) &
+             ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
     break;
   }
 }
 
-void loop() {
+void loop()
+{
   int i;
-  for(i = 9; i>=0; i--)
+  for (i = 9; i >= 0; i--)
   {
     sevenSegmentDisplay(i);
     delayUs(1000);
   }
-  for(i = 0; i<=9; i++)
+  for (i = 0; i <= 9; i++)
   {
     sevenSegmentDisplay(i);
     delayUs(1000);
   }
 }
-
-

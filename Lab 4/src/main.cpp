@@ -35,6 +35,7 @@ typedef enum
 volatile buttonState myButtonState = waitPress;
 volatile int flip = 1;
 volatile int i = 9;
+
 int main()
 {
   initADC();
@@ -46,18 +47,26 @@ int main()
   initSwitchPD0();
   sei(); // Enable global interrupts.
 
+  unsigned int result = 0;
+  float potentiometer_voltage = 0;
+
   // while loop
   while (1)
   {
+
+    result = ADCL;
+    result += ((unsigned int)ADCH) << 8;
+    potentiometer_voltage = result * (4.586 / 1024.0);
+
     if (flip == 1)
     { // clockwise
       changeDutyCycle(768);
-    // voltage for potentionmeter=5V 
+      // voltage for potentionmeter=5V
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
-      //voltage for potentionmeter=0V
+      // voltage for potentionmeter=0V
       changeDutyCycle(255);
       // writeString("CCwise");
     }
