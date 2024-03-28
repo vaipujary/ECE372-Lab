@@ -1,5 +1,7 @@
 // Authors:     Group 3
 // Date:        04/04/2024
+// Authors:     Group 3
+// Date:        04/04/2024
 // Assignment:  Lab 4
 //
 // Description:
@@ -20,6 +22,24 @@
 #include "sevensegmentdisplay.h"
 #include <avr/interrupt.h>
 
+#include <Arduino.h>
+#include <avr/io.h>
+#include "switch.h"
+#include "timer.h"
+#include "pwm.h"
+#include "adc.h"
+#include "sevensegmentdisplay.h"
+#include <avr/interrupt.h>
+
+// A state machine is used to implement the bulk of the functionality of the program
+typedef enum
+{
+  waitPress,
+  debouncePress,
+  waitRelease,
+  debounceRelease,
+  alarm
+} buttonState; // Define a set of states that can be used in the state machine using an enum.
 // A state machine is used to implement the bulk of the functionality of the program
 typedef enum
 {
@@ -48,12 +68,12 @@ int main()
   {
     if (flip == 1)
     { // clockwise
-    // voltage for potentionmeter=5V 
+      // voltage for potentionmeter=5V
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
-      //voltage for potentionmeter=0V
+      // voltage for potentionmeter=0V
       // writeString("CCwise");
     }
 
