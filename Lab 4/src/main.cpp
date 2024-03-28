@@ -28,8 +28,7 @@ typedef enum
   waitPress,
   debouncePress,
   waitRelease,
-  debounceRelease,
-  alarm
+  debounceRelease
 } buttonState; // Define a set of states that can be used in the state machine using an enum.
 
 volatile buttonState myButtonState = waitPress;
@@ -88,12 +87,6 @@ int main()
     case debounceRelease:
       myButtonState = waitPress;
       break;
-
-    case alarm:
-
-      myButtonState = waitPress;
-      break;
-
     default:
       break;
     }
