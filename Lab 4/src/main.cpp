@@ -48,16 +48,12 @@ int main()
   {
     if (flip == 1)
     { // clockwise
-      turnOnLEDWithChar(count);
-      delayMs(LONG_DELAY);
-      moveCursor(1, 0);
+
       // writeString("Clockwise");
     }
     else if (flip == 2)
     { // counterclockwise
-      turnOnLEDWithChar(count);
-      delayMs(SHORT_DELAY);
-      moveCursor(1, 0);
+      
       // writeString("CCwise");
     }
 
