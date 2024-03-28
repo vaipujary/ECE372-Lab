@@ -1,5 +1,5 @@
-// Authors:     Group 3  
-// Date:        04/04/2024   
+// Authors:     Group 3
+// Date:        04/04/2024
 // Assignment:  Lab 4
 //
 // Description:
@@ -10,53 +10,62 @@
 //      4.A state machine is used to implement the bulk of the functionality
 //      of the program
 //----------------------------------------------------------------------//
-  
-  #include <Arduino.h>
-  #include <avr/io.h>
-  #include "switch.h"
-  #include "timer.h"
-  #include "pwm.h"
-  #include "adc.h"
-  #include "sevensegmentdisplay.h"
-  #include <avr/interrupt.h>
 
-// A state machine is used to implement the bulk of the functionality of the program  
-typedef enum {waitPress, debouncePress, waitRelease, debounceRelease, alarm} buttonState; // Define a set of states that can be used in the state machine using an enum.
+#include <Arduino.h>
+#include <avr/io.h>
+#include "switch.h"
+#include "timer.h"
+#include "pwm.h"
+#include "adc.h"
+#include "sevensegmentdisplay.h"
+#include <avr/interrupt.h>
 
-  volatile buttonState myButtonState = waitPress;
+// A state machine is used to implement the bulk of the functionality of the program
+typedef enum
+{
+  waitPress,
+  debouncePress,
+  waitRelease,
+  debounceRelease,
+  alarm
+} buttonState; // Define a set of states that can be used in the state machine using an enum.
 
-  int main(){
+volatile buttonState myButtonState = waitPress;
 
-    initTimer1();
-    initTimer0();
-    sei(); // Enable global interrupts.
-    
+int main()
+{
+
+  initTimer1();
+  initTimer0();
+  initPWMTimer3();
+  sei(); // Enable global interrupts.
 
   // while loop
-    while (1) { // An infinite while loop must be present.
+  while (1)
+  { // An infinite while loop must be present.
 
-      // State machine logic
-      switch (myButtonState) {
+    // State machine logic
+    switch (myButtonState)
+    {
 
-        case waitPress:    // the "natural" state
-        break;
+    case waitPress: // the "natural" state
+      break;
 
-        case debouncePress:
-        break;
+    case debouncePress:
+      break;
 
-        case waitRelease: //waits for button to be released after pressed
-        break;
+    case waitRelease: // waits for button to be released after pressed
+      break;
 
-        case debounceRelease:      
-        break;
+    case debounceRelease:
+      break;
 
-        default:
-        break;
-
-      }
+    default:
+      break;
     }
-    return 0;
   }
+  return 0;
+}
 
 // ISR(){
 //  // TODO
