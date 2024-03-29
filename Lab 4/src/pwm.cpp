@@ -3,19 +3,84 @@
 #include "pwm.h"
 
 // One duty cycle
-void changeDutyCycle(unsigned int OCRval)
-{                   // Pass in the desired OCR value. 1023 for max output, 0 for no output.
-    OCR3A = OCRval; // Calculate OCR3A based on PWM period. Hardcoded for now, later change to use ADC registers
-    //1023*duty cyle amount
+void changeDutyCycle(unsigned int OCR_num)
+{ // Pass in the desired OCR value. 1023 for max output, 0 for no output.
+    // OCR_num is a 16 bit number that contains the 10-bit combination of ADCH and ADCL registers.
+    // Obtain the correct speed and direction on the DC motor.
+
+    // Clockwise rotation of motor
+    if (OCR_num < 512)
+    {
+        // 0 represents max ramp (100% duty cycle,) and 512 represents min rmp (0% duty cycle)
+        OCR3A = 2 * (0b1111111111 - OCR_num);
+        OCR4A = 0;
+    }
+    // Counterclockwise rotation of motor
+    else if (OCR_num > 512)
+    {
+        // 0 represents max ramp (100% duty cycle,) and 512 represents min rmp (0% duty cycle)
+        OCR4A = 2 * (OCR_num);
+        OCR3A = 0;
+    }
+    // Motor not moving
+    else
+    {
+        OCR3A = (0);
+        OCR4A = 0;
+    } // Calculate OCR3A based on PWM period. Hardcoded for now, later change to use ADC registers
+    // 1023*duty cyle amount
 }
 
 void initPWMTimer3()
 {
     // Timer 3A, on pin 5 on the board
+    // Data direction pins
     DDRE |= (1 << DDE3);
+
+    // Set pins for non-inverting timer
     TCCR3A |= (1 << COM3A1) | (1 << WGM31) | (1 << WGM30);
+    TCCR3A &= ~(1 << COM3A0);
     TCCR3B |= (1 << WGM32) | (1 << CS30);
-    changeDutyCycle(0); // default PWM to off
+    TCCR3B &= ~(1 << CS31);
+    TCCR3B &= ~(1 << CS32);
+    // changeDutyCycle(0); // default PWM to off
+    OCR3A = 512;
+}
+
+void initPWMTimer4()
+{
+    // Set header pin 6 to output, corresponding to OC4A
+    // Data direction pins
+    DDRH |= (1 << DDH3);
+    // set non-inverting mode - output starts high and then is low,
+    // COM1A0 bit = 1
+    // COM1A1 bit = 1
+    TCCR4A &= ~(1 << COM4A0);
+    TCCR4A |= (1 << COM4A1);
+
+    //  Use  PWM mode 10 bit, top value is determined by ICR1 value,
+    //  which determines the PWM frequency.
+    // for mode 14:
+    // WGM40 = 0
+    // WGM41 = 1
+    // WGM42 = 1
+    // WGM43 = 1
+    TCCR4A |= (1 << WGM40);
+    TCCR4A |= (1 << WGM41);
+    TCCR4B |= (1 << WGM42);
+    TCCR4B &= ~(1 << WGM43);
+
+    ICR4 = 1023;
+
+    // set prescalar CSBits to prescaler of 1
+    // CS30 =1
+    // CS31 =0
+    // CS32 =0
+    TCCR4B |= (1 << CS40);
+    TCCR4B &= ~((1 << CS41) | (1 << CS42));
+
+    // The last thing is to set the duty cycle.
+    OCR4A = 1023;
 }
 
 // Two duty cycles

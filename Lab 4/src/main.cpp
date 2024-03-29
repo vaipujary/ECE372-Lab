@@ -1,6 +1,4 @@
-// Authors:     Group 3
-// Date:        04/04/2024
-// Authors:     Group 3
+// Authors:     Group 3 Alicia Enriquez, Vaidehi Pujary, Logan Stonehouse, Jake Weithas
 // Date:        04/04/2024
 // Assignment:  Lab 4
 //
@@ -37,6 +35,7 @@ volatile int i = 9;
 
 int main()
 {
+  // Initializations
   initADC();
   initTimer1();
   initTimer0();
@@ -47,7 +46,6 @@ int main()
   sei(); // Enable global interrupts.
 
   unsigned int result = 0;
-  float potentiometer_voltage = 0;
 
   // while loop
   while (1)
@@ -55,7 +53,8 @@ int main()
 
     result = ADCL;
     result += ((unsigned int)ADCH) << 8;
-    potentiometer_voltage = result * (4.586 / 1024.0);
+    changeDutyCycle(result);
+    Serial.println(result);
 
     if (flip == 1)
     {                       // clockwise
@@ -94,8 +93,25 @@ int main()
       break;
 
     case debounceRelease:
+      turnOffImsk(); // Disable INT0 in the EIMSK register
+
+      for (int i = 0; i < 10; i++)
+      {
+        changeDutyCycle(512);
+        sevenSegmentDisplay(i);
+        delayMs(1000);
+      }
+      sevenSegmentDisplay(0);
+
+      // Enable the button interrupt
+      turnOnImsk(); // Enable INT0 in the EIMSK register
+
+      // Wait for the noisy 'debounce' state to pass. Then, we are awaiting press.
+      delayMs(1);
+
       myButtonState = waitPress;
       break;
+
     default:
       break;
     }
