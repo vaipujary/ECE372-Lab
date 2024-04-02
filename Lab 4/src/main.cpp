@@ -38,6 +38,9 @@ int main()
   initTimer1();
   initTimer0();
   initPWMTimer3();
+  initSevenSegment();
+  initADC();
+  initSwitchPD0();
   sei(); // Enable global interrupts.
 
   // while loop
