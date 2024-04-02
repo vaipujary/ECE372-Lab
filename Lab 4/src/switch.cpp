@@ -1,8 +1,8 @@
-// Authors:     Group 3 Alicia Enriquez   
-// Date:        04/04/2024   
+// Authors:     Group 3 Alicia Enriquez, Vaidehi Pujary, Logan Stonehouse, Jake Weithas
+// Date:        04/04/2024
 // Assignment:  Lab 4
 //
-// Description: 
+// Description:
 //
 // Requirements:
 //        1.Uses a switch to turn the motor off.
@@ -18,20 +18,26 @@
 #include "switch.h"
 #include <avr/io.h>
 
-void initSwitchPD0(){
+void initSwitchPD0()
+{
     // Initializes pin 21 direction on board as an input (button)
     PORTD |= (1 << PD0);  // PD0 must be initialized with an input pull-up resistor
-    DDRD &= ~(1 << DDD0);  // Sets pin direction as an input (pin D0)
+    DDRD &= ~(1 << DDD0); // Sets pin direction as an input (pin D0)
 
     // External Interrupts must be enabled for pin PD0
     EIFR |= (1 << INTF0); // flag
-    EIMSK |= (1 << INT0); // mask
+    EIMSK |= (1 << INT0); // Enable INT0 mask in EIMSK register
+    // Set INT0 to trigger asynchronously on any edge (high or low)
+    EICRA &= ~(1 << ISC01);
+    EICRA |= (1 << ISC00);
 }
 
-void turnOffImsk() {
+void turnOffImsk()
+{
     EIMSK &= ~(1 << INT0);
 }
 
-void turnOnImsk() {
+void turnOnImsk()
+{
     EIMSK |= (1 << INT0);
 }
