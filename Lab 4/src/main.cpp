@@ -72,12 +72,12 @@ int main()
     // State machine logic
     switch (myButtonState)
     {
-
+      ///////////////////////////////Press States/////////////////////////////////////////
     case waitPress: // the "natural" state
-
+      // Do nothing, wait for button to be pressed
       break;
 
-    case debouncePress:
+    case debouncePress: // Debounce Press state, wait for swithc debounce state to end
       i = 9;
       while (i >= 0)
       {
@@ -88,6 +88,7 @@ int main()
       myButtonState = waitRelease;
       break;
 
+    ///////////////////////////////Release States///////////////////////////////
     case waitRelease: // waits for button to be released after pressed
       myButtonState = debounceRelease;
       break;
