@@ -17,12 +17,13 @@ void initTimer1(){
     TCCR1A &= ~(1 << WGM11);
     TCCR1B |= (1 << WGM12);
     TCCR1B &= ~(1 << WGM13);
-
-    OCR1A = 2;                // 1ms timer at a prescalar of 8, CTC compare value
 }
 
 void delayUs(unsigned int delay){
     unsigned int count = 0;
+
+    OCR1AH = 0; 
+    OCR1AL = 16; 
 
     // Turns on clock sets the prescaler bits to 8 (010)
     TCCR1B &= (1 << CS10) | (1 << CS12);
@@ -31,6 +32,9 @@ void delayUs(unsigned int delay){
     while (count < delay) {         // 1 ms Delay
         TCNT1 = 0;                  // starting timer at 0
         TIFR1 |= (1 << OCF1A);      // set compare flag to start timer
+
+        TCCR1B &= ~((1 << CS10) | (1 << CS12));
+        TCCR1B |= ~(1 << CS11);
 
         while (! (TIFR1 & (1 << OCF1A))) {};
 
@@ -47,8 +51,6 @@ void initTimer0(){
     TCCR0A &= ~(1 << WGM00);
     TCCR0A |= (1 << WGM01);
     TCCR0B &= ~(1 << WGM02);
-
-    OCR0A = 249;            // 1ms timer at a prescalar of 64, CTC compare value
 }
 
 
