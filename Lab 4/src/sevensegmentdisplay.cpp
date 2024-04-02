@@ -83,18 +83,3 @@ void sevenSegmentDisplay(int a) /* Function for displaying number (0-9) */
     break;
   }
 }
-
-void loop()
-{
-  int i;
-  for (i = 9; i >= 0; i--)
-  {
-    sevenSegmentDisplay(i);
-    delayUs(1000);
-  }
-  for (i = 0; i <= 9; i++)
-  {
-    sevenSegmentDisplay(i);
-    delayUs(1000);
-  }
-}
