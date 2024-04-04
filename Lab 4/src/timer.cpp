@@ -3,14 +3,13 @@
 // Assignment:  Lab 4
 //
 // Description: 
-//          NOTE: changes may still need to be made here
+//          
 // Requirements:
 //        1.Uses a timer0 to debounce states. Timer 1 to count 10 seconds for
 //        the seven segment display.
 //----------------------------------------------------------------------//
 
 #include "timer.h"
-
 
 void initTimer1(){
 	// CTC setting in the timer register
@@ -66,7 +65,7 @@ void delayMs(unsigned int delay){
         TCNT0 = 0;                  // starting timer at 0
         TIFR0 |= (1 << OCF0A);      // set compare flag to start timer
 
-        while (! (TIFR0 & (1 << OCF0A))) {};
+        while (!(TIFR0 & (1 << OCF0A))) {};
 
         count++;
     }

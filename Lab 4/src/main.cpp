@@ -82,6 +82,7 @@ int main()
     case debouncePress: // Debounce Press state, wait for swithc debounce state to end
       Serial.println("debouncePress");
       myButtonState = waitRelease;
+      delayMs(1000);
       break;
 
     ///////////////////////////////Release States///////////////////////////////
