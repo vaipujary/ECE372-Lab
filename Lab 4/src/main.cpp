@@ -79,7 +79,8 @@ int main()
       Serial.println("waitPress");
       break;
 
-    case debouncePress: // Debounce Press state, wait for swithc debounce state to end
+    case debouncePress: // Debounce Press state, wait for switch debounce state to end
+      delayMs(1);
       Serial.println("debouncePress");
       myButtonState = waitRelease;
       delayMs(1000);
@@ -94,7 +95,7 @@ int main()
       Serial.println("debounceRelease");
       turnOffImsk(); // Disable INT0 in the EIMSK register
 
-      for (int i = 0; i < 10; i++)
+      for (int i = 9; i >= 0; i--)
       {
         changeDutyCycle(512);
         sevenSegmentDisplay(i);
