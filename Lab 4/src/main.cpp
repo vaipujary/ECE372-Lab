@@ -35,6 +35,7 @@ volatile int i = 9;
 
 int main()
 {
+  Serial.begin(9600);
   // Initializations
   initADC();
   initTimer1();
@@ -46,7 +47,6 @@ int main()
   sei(); // Enable global interrupts.
 
   unsigned int result = 0;
-
   // while loop
   while (1)
   {
