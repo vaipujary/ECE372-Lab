@@ -54,20 +54,20 @@ int main()
     result = ADCL;
     result += ((unsigned int)ADCH) << 8;
     changeDutyCycle(result);
-    Serial.println(result);
+    // Serial.println(result);
 
-    if (flip == 1)
-    {                       // clockwise
-      changeDutyCycle(768); //.75% duty cycle
-      // voltage for potentionmeter=5V
-      // writeString("Clockwise");
-    }
-    else if (flip == 2)
-    { // counterclockwise
-      // voltage for potentionmeter=0V
-      changeDutyCycle(255); //.25% duty cycle
-      // writeString("CCwise");
-    }
+    // if (flip == 1)
+    // {                       // clockwise
+    //   changeDutyCycle(768); //.75% duty cycle
+    //   // voltage for potentionmeter=5V
+    //   // writeString("Clockwise");
+    // }
+    // else if (flip == 2)
+    // { // counterclockwise
+    //   // voltage for potentionmeter=0V
+    //   changeDutyCycle(255); //.25% duty cycle
+    //   // writeString("CCwise");
+    // }
 
     // State machine logic
     switch (myButtonState)
@@ -81,6 +81,7 @@ int main()
       i = 9;
       while (i >= 0)
       {
+        
         sevenSegmentDisplay(i);
         delayMs(1000);
         i = i - 1;
@@ -113,6 +114,7 @@ int main()
       break;
 
     default:
+      myButtonState=waitPress;
       break;
     }
   }
@@ -127,14 +129,14 @@ ISR(PCINT0_vect)
   else if (myButtonState == waitRelease)
   {
 
-    if (flip == 1)
-    {
-      flip = 2;
-    }
-    else
-    {
-      flip = 1;
-    }
+    // if (flip == 1)
+    // {
+    //   flip = 2;
+    // }
+    // else
+    // {
+    //   flip = 1;
+    // }
     myButtonState = debounceRelease;
   }
 }
