@@ -25,7 +25,6 @@ void initSwitchPD0()
     DDRD &= ~(1 << DDD0); // Sets pin direction as an input (pin D0)
 
     // External Interrupts must be enabled for pin PD0
-    EIFR |= (1 << INTF0); // flag
     EIMSK |= (1 << INT0); // Enable INT0 mask in EIMSK register
     // Set INT0 to trigger asynchronously on any edge (high or low)
     EICRA &= ~(1 << ISC01);
