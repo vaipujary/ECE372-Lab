@@ -24,37 +24,27 @@ void sevenSegmentDisplay(int a) /* Function for displaying number (0-9) */
   switch (a)
   {
   case 0:
-    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) |
-             (1 << PORTC3) | (1 << PORTC4) | (1 << PORTC5);
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) | (1 << PORTC3) | (1 << PORTC4) | (1 << PORTC5);
     PORTC &= ~(1 << PORTC6);
     break;
   case 1:
     PORTC |= (1 << PORTC1) | (1 << PORTC2);
-
-    PORTC &= ~(1 << PORTC0) &
-             ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
+    PORTC &= ~(1 << PORTC0) & ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
     break;
   case 2:
-    PORTC |= (1 << PORTC0) | (1 << PORTC1) |
-             (1 << PORTC4) | (1 << PORTC6) |
-             (1 << PORTC3);
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC4) | (1 << PORTC6) | (1 << PORTC3);
     PORTC &= ~(1 << PORTC2) & ~(1 << PORTC5);
     break;
   case 3:
-    PORTC |= (1 << PORTC0) | (1 << PORTC1) |
-             (1 << PORTC2) | (1 << PORTC3) |
-             (1 << PORTC6);
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) | (1 << PORTC3) | (1 << PORTC6);
     PORTC &= ~(1 << PORTC4) & ~(1 << PORTC5);
     break;
   case 4:
-    PORTC |= (1 << PORTC1) | (1 << PORTC2) |
-             (1 << PORTC5) | (1 << PORTC6);
+    PORTC |= (1 << PORTC1) | (1 << PORTC2) | (1 << PORTC5) | (1 << PORTC6);
     PORTC &= ~(1 << PORTC0) & ~(1 << PORTC3) & ~(1 << PORTC4);
     break;
   case 5:
-    PORTC |= (1 << PORTC0) | (1 << PORTC2) |
-             (1 << PORTC3) | (1 << PORTC5) |
-             (1 << PORTC6);
+    PORTC |= (1 << PORTC0) | (1 << PORTC2) | (1 << PORTC3) | (1 << PORTC5) | (1 << PORTC6);
     PORTC &= ~(1 << PORTC1) & ~(1 << PORTC4);
     break;
   case 6:
@@ -64,37 +54,17 @@ void sevenSegmentDisplay(int a) /* Function for displaying number (0-9) */
     break;
   case 7:
     PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2);
-
     PORTC &= ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
     break;
   case 8:
-    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) |
-             (1 << PORTC3) | (1 << PORTC4) | (1 << PORTC5) | (1 << PORTC6);
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) | (1 << PORTC3) | (1 << PORTC4) | (1 << PORTC5) | (1 << PORTC6);
     break;
   case 9:
-    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) |
-             (1 << PORTC3) | (1 << PORTC5) | (1 << PORTC6);
-
+    PORTC |= (1 << PORTC0) | (1 << PORTC1) | (1 << PORTC2) | (1 << PORTC3) | (1 << PORTC5) | (1 << PORTC6);
     PORTC &= ~(1 << PORTC4);
     break;
   default:
-    PORTC &= ~(1 << PORTC0) & ~(1 << PORTC1) & ~(1 << PORTC2) &
-             ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
+    PORTC &= ~(1 << PORTC0) & ~(1 << PORTC1) & ~(1 << PORTC2) & ~(1 << PORTC3) & ~(1 << PORTC4) & ~(1 << PORTC5) & ~(1 << PORTC6);
     break;
-  }
-}
-
-void loop()
-{
-  int i;
-  for (i = 9; i >= 0; i--)
-  {
-    sevenSegmentDisplay(i);
-    delayUs(1000);
-  }
-  for (i = 0; i <= 9; i++)
-  {
-    sevenSegmentDisplay(i);
-    delayUs(1000);
   }
 }

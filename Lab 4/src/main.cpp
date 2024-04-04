@@ -55,7 +55,20 @@ int main()
     result += ((unsigned int)ADCH) << 8;
     changeDutyCycle(result);
     // Serial.println(result);
+    // Serial.println(result);
 
+    // if (flip == 1)
+    // {                       // clockwise
+    //   changeDutyCycle(768); //.75% duty cycle
+    //   // voltage for potentionmeter=5V
+    //   // writeString("Clockwise");
+    // }
+    // else if (flip == 2)
+    // { // counterclockwise
+    //   // voltage for potentionmeter=0V
+    //   changeDutyCycle(255); //.25% duty cycle
+    //   // writeString("CCwise");
+    // }
     // if (flip == 1)
     // {                       // clockwise
     //   changeDutyCycle(768); //.75% duty cycle
@@ -72,24 +85,28 @@ int main()
     // State machine logic
     switch (myButtonState)
     {
-
+      ///////////////////////////////Press States/////////////////////////////////////////
     case waitPress: // the "natural" state
-
+      // Do nothing, wait for button to be pressed
+      Serial.println("waitPress");
       break;
 
-    case debouncePress:
-      delayMs(1000);
+    case debouncePress: // Debounce Press state, wait for switch debounce state to end
+      delayMs(1);
+      Serial.println("debouncePress");
       myButtonState = waitRelease;
       break;
 
+    ///////////////////////////////Release States///////////////////////////////
     case waitRelease: // waits for button to be released after pressed
-      myButtonState = debounceRelease;
+      Serial.println("waitRelease");
       break;
 
     case debounceRelease:
+      Serial.println("debounceRelease");
       turnOffImsk(); // Disable INT0 in the EIMSK register
 
-      for (int i = 0; i < 10; i++)
+      for (int i = 9; i >= 0; i--)
       {
         changeDutyCycle(512);
         sevenSegmentDisplay(i);

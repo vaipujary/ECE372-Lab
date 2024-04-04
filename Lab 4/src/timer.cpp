@@ -11,6 +11,7 @@
 
 #include "timer.h"
 
+
 void initTimer1(){
 	// CTC setting in the timer register
     TCCR1A &= ~(1 << WGM10);
@@ -34,7 +35,7 @@ void delayUs(unsigned int delay){
         TIFR1 |= (1 << OCF1A);      // set compare flag to start timer
 
         TCCR1B &= ~((1 << CS10) | (1 << CS12));
-        TCCR1B |= ~(1 << CS11);
+        TCCR1B |= (1 << CS11);
 
         while (! (TIFR1 & (1 << OCF1A))) {};
 
