@@ -118,7 +118,7 @@ int main()
   }
   return 0;
 }
-ISR(PCINT0_vect)
+ISR(INT0_vect)
 {
   if (myButtonState == waitPress)
   {
