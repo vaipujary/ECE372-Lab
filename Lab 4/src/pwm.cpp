@@ -9,23 +9,16 @@ void changeDutyCycle(unsigned int OCR_num)
     // Obtain the correct speed and direction on the DC motor.
 
     // Clockwise rotation of motor
-    if (OCR_num < 512)
+    if (OCR_num != 512)
     {
         // 0 represents max ramp (100% duty cycle,) and 512 represents min rmp (0% duty cycle)
-        OCR3A = 2 * (0b1111111111 - OCR_num);
-        OCR4A = 0;
-    }
-    // Counterclockwise rotation of motor
-    else if (OCR_num > 512)
-    {
-        // 0 represents max ramp (100% duty cycle,) and 512 represents min rmp (0% duty cycle)
-        OCR4A = 2 * (OCR_num);
-        OCR3A = 0;
+        OCR3A = (1024 - OCR_num);
+        OCR4A = OCR_num;
     }
     // Motor not moving
     else
     {
-        OCR3A = (0);
+        OCR3A = 0;
         OCR4A = 0;
     } // Calculate OCR3A based on PWM period. Hardcoded for now, later change to use ADC registers
     // 1023*duty cyle amount
@@ -38,13 +31,14 @@ void initPWMTimer3()
     DDRE |= (1 << DDE3);
 
     // Set pins for non-inverting timer
-    TCCR3A |= (1 << COM3A1) | (1 << WGM31) | (1 << WGM30);
-    TCCR3A &= ~(1 << COM3A0);
-    TCCR3B |= (1 << WGM32) | (1 << CS30);
-    TCCR3B &= ~(1 << CS31);
+    TCCR3A |= (1 << COM3A1) | (1 << WGM31);
+    TCCR3A &= ~(1 << COM3A0) | (1 << WGM30);
+    TCCR3B |= (1 << WGM32) | (1 << CS30) | (1 << WGM33);
+    TCCR3B |= ~(1 << CS31);
     TCCR3B &= ~(1 << CS32);
     // changeDutyCycle(0); // default PWM to off
-    OCR3A = 512;
+    OCR3A = 0;
+    ICR3 = 1024;
 }
 
 void initPWMTimer4()
@@ -65,10 +59,10 @@ void initPWMTimer4()
     // WGM41 = 1
     // WGM42 = 1
     // WGM43 = 1
-    TCCR4A |= (1 << WGM40);
+    TCCR4A &= ~(1 << WGM40);
     TCCR4A |= (1 << WGM41);
     TCCR4B |= (1 << WGM42);
-    TCCR4B &= ~(1 << WGM43);
+    TCCR4B |= (1 << WGM43);
 
     ICR4 = 1023;
 
@@ -76,11 +70,11 @@ void initPWMTimer4()
     // CS30 =1
     // CS31 =0
     // CS32 =0
-    TCCR4B |= (1 << CS40);
-    TCCR4B &= ~((1 << CS41) | (1 << CS42));
+    TCCR4B |= (1 << CS41);
+    TCCR4B &= ~((1 << CS40) | (1 << CS42));
 
     // The last thing is to set the duty cycle.
-    OCR4A = 1023;
+    OCR4A = 0;
 }
 
 // Two duty cycles
