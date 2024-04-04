@@ -30,7 +30,6 @@ typedef enum
 } buttonState; // Define a set of states that can be used in the state machine using an enum.
 
 volatile buttonState myButtonState = waitPress;
-volatile int flip = 1;
 volatile int i = 9;
 
 int main()
@@ -55,20 +54,6 @@ int main()
     result = ADCL;
     result += ((unsigned int)ADCH) << 8;
     changeDutyCycle(result);
-    // Serial.println(result);
-
-    // if (flip == 1)
-    // {                       // clockwise
-    //   changeDutyCycle(768); //.75% duty cycle
-    //   // voltage for potentionmeter=5V
-    //   // writeString("Clockwise");
-    // }
-    // else if (flip == 2)
-    // { // counterclockwise
-    //   // voltage for potentionmeter=0V
-    //   changeDutyCycle(255); //.25% duty cycle
-    //   // writeString("CCwise");
-    // }
 
     // State machine logic
     switch (myButtonState)
@@ -101,8 +86,6 @@ int main()
         sevenSegmentDisplay(i);
         delayMs(1000);
       }
-      sevenSegmentDisplay(0);
-
       // Enable the button interrupt
       turnOnImsk(); // Enable INT0 in the EIMSK register
 
@@ -126,15 +109,6 @@ ISR(INT0_vect)
   }
   else if (myButtonState == waitRelease)
   {
-
-    // if (flip == 1)
-    // {
-    //   flip = 2;
-    // }
-    // else
-    // {
-    //   flip = 1;
-    // }
     myButtonState = debounceRelease;
   }
 }
