@@ -11,6 +11,7 @@
 
 #include "timer.h"
 
+
 void initTimer1(){
 	// CTC setting in the timer register
     TCCR1A &= ~(1 << WGM10);
