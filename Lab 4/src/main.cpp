@@ -126,14 +126,14 @@ ISR(PCINT0_vect)
   else if (myButtonState == waitRelease)
   {
 
-    if (flip == 1)
-    {
-      flip = 2;
-    }
-    else
-    {
-      flip = 1;
-    }
+    // if (flip == 1)
+    // {
+    //   flip = 2;
+    // }
+    // else
+    // {
+    //   flip = 1;
+    // }
     myButtonState = debounceRelease;
   }
 }
