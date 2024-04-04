@@ -50,7 +50,7 @@ int main()
   // while loop
   while (1)
   {
-
+    turnOnImsk(); // Enable INT0 in the EIMSK register
     result = ADCL;
     result += ((unsigned int)ADCH) << 8;
     changeDutyCycle(result);
