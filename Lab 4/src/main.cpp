@@ -83,6 +83,7 @@ int main()
       delayMs(1);
       Serial.println("debouncePress");
       myButtonState = waitRelease;
+      delayMs(1000);
       break;
 
     ///////////////////////////////Release States///////////////////////////////
