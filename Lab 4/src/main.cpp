@@ -78,14 +78,7 @@ int main()
       break;
 
     case debouncePress:
-      i = 9;
-      while (i >= 0)
-      {
-        
-        sevenSegmentDisplay(i);
-        delayMs(1000);
-        i = i - 1;
-      }
+      delayMs(1000);
       myButtonState = waitRelease;
       break;
 
