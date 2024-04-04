@@ -26,7 +26,7 @@ void delayUs(unsigned int delay){
     OCR1AL = 16; 
 
     // Turns on clock sets the prescaler bits to 8 (010)
-    TCCR1B &= (1 << CS10) | (1 << CS12);
+    TCCR1B &= ~((1 << CS10) | (1 << CS12));
     TCCR1B |= (1 << CS11);
 
     while (count < delay) {         // 1 ms Delay
