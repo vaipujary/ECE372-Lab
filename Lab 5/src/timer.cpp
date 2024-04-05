@@ -8,6 +8,8 @@
 
 //----------------------------------------------------------------------//
 
+#include "timer.h"
+
 void initTimer0()
 {
     // intialize Timer0 for CTC mode of operation and interrupts
