@@ -1,18 +1,28 @@
+// Authors:     Group 3 Alicia Enriquez, Vaidehi Pujary, Logan Stonehouse, Jake Weithas
+// Date:        04/25/2024
+// Assignment:  Lab 5
+//
+// Description:
+//
+// Requirements:
+
+//----------------------------------------------------------------------//
+
 #include <Arduino.h>
+#include <avr/io.h>
+#include "spi.h"
+#include "pwm.h"
+#include "timer.h"
+#include "switch.h"
+#include "i2c.h"
 
-// put function declarations here:
-int myFunction(int, int);
+int main(){
+    while(1) {
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    }
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
+// ISR(INT2_vect) {
+
+// }

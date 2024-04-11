@@ -11,17 +11,14 @@
 #include <avr/io.h>
 
 /*
- * Initializes pull-up resistor on PB3 and sets it into input mode
+ * Initializes pull-up resistor on PD2 and sets it into input mode
  */
-void initSwitchPB3()
+void initSwitchPD2()
 {
-    DDRB &= ~(1 << DDB3); // set direction for input
+    DDRD &= ~(1 << DDD2); // Set direction for input
 
-    PORTB |= (1 << PORTB3); // enable pull up resistor (stable input)
+    PORTD |= (1 << PORTD2); // Enable pull up resistor (stable input)
 
-    // set up for pin change interrupt
-    //  enable PCINT 0 - 7
-    PCICR |= (1 << PCIE0);
-    // enable PCINT3 since we're using switch 3
-    PCMSK0 |= (1 << PCINT3);
+    EIFR |= (1 << INTF2); // External Interrupt Mask Register
+    EIMSK |= (1 << INT2); // External Interrupt Flag Register
 }
