@@ -15,8 +15,18 @@
 #include "timer.h"
 #include "switch.h"
 #include "i2c.h"
-
+typedef enum {
+  waitPress,
+  debouncePress,
+  waitRelease,
+  debounceRelease} buttonState;
+typedef enum {
+    LEDSMILLEY,LEDSAD
+}LEDFACES;
+int ChirpOn=0;//chirp=0 no chirp,1 chirping
 int main(){
+    initTimer0();
+
     while(1) {
 
     }
