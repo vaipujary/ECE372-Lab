@@ -31,9 +31,6 @@
 #define PWR_MANAGEMENT_REG 0x6B
 #define MPU_PWR_CONFIG 0x09
 
-#define MPU_PWR_RESET 0x70 // resets all registers in accel to defaults
-#define MPU_PWR_MANAGEMENT_2 0x6C
-
 // Button states
 typedef enum
 {
@@ -150,7 +147,7 @@ int main()
     case waitPress:
       Serial.println("waitPress");
       myButtonState = waitPress;
-      delayMs(1000);
+      delayMs(1);
       break;
     case debouncePress:
       Serial.println("debouncePress");
