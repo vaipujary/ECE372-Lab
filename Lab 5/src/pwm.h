@@ -4,7 +4,7 @@
 #include <avr/io.h>
 
 void initPWMTimer3();
-void changeFrequency();
+void changeFrequency(unsigned int frequency);
 void alarmOn();
 void alarmOff();
 
