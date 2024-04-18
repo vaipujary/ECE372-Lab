@@ -108,21 +108,6 @@ int main()
     Serial.print("y: " + String(y) + "\n");
     Serial.print("z: " + String(z) + "\n");
 
-    // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_L);
-    // signed int a = read_Data();
-    // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_H);
-    // xGyro = (read_Data() << 8 | a);
-
-    // read_From(MPU_WHO_AM_I, MPU_GYRO_YOUT_L);
-    // signed int b = read_Data();
-    // read_From(MPU_WHO_AM_I, MPU_GYRO_YOUT_H);
-    // yGyro = (read_Data() << 8 | b);
-
-    // read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_L);
-    // signed int c = read_Data();
-    // read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_H);
-    // zGyro = (read_Data() << 8 | c);
-
     // Check thresholds of accelerometer: if above threshold, display frown
     if ((x >= 8000) || (x <= -8000) || (z <= 13000))
     {
