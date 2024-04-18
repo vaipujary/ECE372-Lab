@@ -29,7 +29,6 @@
 #define SLA 0x68
 
 #define PWR_MANAGEMENT_REG 0x6B
-#define MPU_PWR_CONFIG 0x09
 
 // Button states
 typedef enum
@@ -53,7 +52,7 @@ volatile int z = 0;
 
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState = LEDSMILEY;
-int chirpOn = 0; // chirp=0 no chirp,1 chirping
+int chirpOn = 0; // chirp = 0 no chirp, 1 chirping
 
 int main()
 {
@@ -69,7 +68,7 @@ int main()
   initTimer1();
   initSwitchPD2();
 
-  // SPI
+  // SPI LED Matrix
   // LED Matrix brightness control
   write_execute(0x0A, 0x03);
   // Scan all rows and columns
