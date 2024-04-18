@@ -30,7 +30,7 @@ void initPWMTimer3()
     TCCR3B |= (1 << WGM33); 
 
     TCCR3B |=  (1 << CS30);
-    TCCR3B |= (1 << CS31);
+    TCCR3B &= ~(1 << CS31);
     TCCR3B &= ~(1 << CS32);
 }
 
