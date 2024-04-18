@@ -127,6 +127,7 @@ int main()
     if ((x >= 8000) || (x <= -8000) || (z <= 13000))
     {
       LEDState = LEDSAD;
+
       for (int i = 1000; i <= 4000; i++)
       {
         changeFrequency(i);
