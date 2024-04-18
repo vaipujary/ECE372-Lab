@@ -26,6 +26,8 @@ typedef enum {
 volatile int x;
 volatile int y;
 volatile int z;
+
+#define MPU_WHO_AM_I 0x68
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState =LEDSMILLEY;
 int ChirpOn=0;//chirp=0 no chirp,1 chirping
@@ -36,11 +38,13 @@ int main(){
     initTimer1();
     initSwitchPD2();
     Serial.begin(9600);
-
+    read_Data();
     while(1) {
-
+      Serial.print("x: "+String(x)+"\n");
+      Serial.print("y: "+String(y)+"\n");
+      Serial.print("z: "+String(z)+"\n");
       for (int i = 1000; i <= 4000; i++) {
-      changeFrequency(i);
+        changeFrequency(i);
       }
 
       switch (LEDState)
