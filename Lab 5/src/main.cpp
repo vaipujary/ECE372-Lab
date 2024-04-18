@@ -158,7 +158,6 @@ int main()
       break;
     case waitRelease:
       Serial.println("waitRelease");
-      Serial.flush();
       delayMs(1);
       break;
     case debounceRelease:
