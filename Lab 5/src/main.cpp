@@ -26,7 +26,9 @@ typedef enum {
 volatile int x;
 volatile int y;
 volatile int z;
-
+//59 and 60 for x
+//61 and 62 for y
+//63 and 64 for z
 #define MPU_WHO_AM_I 0x68
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState =LEDSMILLEY;
@@ -41,6 +43,10 @@ int main(){
     
     read_Data();
     while(1) {
+      read_From(104, 59);
+      x = read_Data();
+      read_From(104, 60);
+      x = (x<<8) + read_Data();
       Serial.print("x: "+String(x)+"\n");
       Serial.print("y: "+String(y)+"\n");
       Serial.print("z: "+String(z)+"\n");
