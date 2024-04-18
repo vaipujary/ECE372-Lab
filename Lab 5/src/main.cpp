@@ -112,6 +112,12 @@ int main()
     read_From(SLA, ZOUT_HIGH);
     z = (read_Data() << 8) | z;
 
+    Serial.print("x: " + String(x) + "\n");
+    Serial.print("y: " + String(y) + "\n");
+    Serial.print("z: " + String(z) + "\n");
+
+    // Check thresholds of accelerometer
+
     // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_L);
     // signed int a = read_Data();
     // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_H);
@@ -126,10 +132,6 @@ int main()
     // signed int c = read_Data();
     // read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_H);
     // zGyro = (read_Data() << 8 | c);
-
-    Serial.print("x: " + String(x) + "\n");
-    Serial.print("y: " + String(y) + "\n");
-    Serial.print("z: " + String(z) + "\n");
 
     for (int i = 1000; i <= 4000; i++)
     {
