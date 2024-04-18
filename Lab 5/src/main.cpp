@@ -149,10 +149,7 @@ int main()
     {
     case waitPress:
       Serial.println("waitPress");
-      if ((x >= 8000) || (x <= -8000) || (z <= 13000))
-      {
-        myButtonState = waitPress;
-      }
+      myButtonState = waitPress;
       delayMs(1000);
       break;
     case debouncePress:
