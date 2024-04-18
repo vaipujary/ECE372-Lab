@@ -111,7 +111,7 @@ int main()
     Serial.print("z: " + String(z) + "\n");
 
     // Check thresholds of accelerometer: if above threshold, display frown
-    if ((x >= 8000) || (x <= -8000) || (z <= 13000))
+    if ((y < 0) || (y > 7000) || (z <= 12500))
     {
       LEDState = LEDSAD;
 
