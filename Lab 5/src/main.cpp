@@ -39,6 +39,7 @@ volatile LEDFACES LEDState = LEDSMILLEY;
 int ChirpOn = 0; // chirp=0 no chirp,1 chirping
 int main()
 {
+  startI2C_Trans(104);
   initI2C();
   initPWMTimer3();
   initSPI();
