@@ -113,7 +113,7 @@ int main()
     {
       LEDState = LEDSAD;
 
-      for (int i = 1000; i <= 4000; i++)
+      for (int i = 1000; i < 4000; i++)
       {
         changeFrequency(i);
       }
