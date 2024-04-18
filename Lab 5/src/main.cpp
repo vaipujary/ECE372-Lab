@@ -153,6 +153,7 @@ int main()
     default:
       break;
     }
+
     // Button State Machine
     switch (myButtonState)
     {
