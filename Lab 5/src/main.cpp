@@ -68,6 +68,14 @@ int main()
   initTimer1();
   initSwitchPD2();
 
+  startI2C_Trans(SLA);
+  // Power management
+  write(PWR_MANAGEMENT_REG);
+  // Wake up from sleep mode
+  write(0);
+  stopI2C_Trans();
+  alarmOff();
+
   // SPI LED Matrix
   // LED Matrix brightness control
   write_execute(0x0A, 0x03);
@@ -80,13 +88,6 @@ int main()
 
   while (1)
   {
-    startI2C_Trans(SLA);
-
-    // Power management
-    write(PWR_MANAGEMENT_REG);
-    // Wake up from sleep mode
-    write(0);
-
     // Read x position
     read_From(SLA, XOUT_HIGH);
     x = read_Data();
