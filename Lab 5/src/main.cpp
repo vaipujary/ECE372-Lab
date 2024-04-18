@@ -170,7 +170,7 @@ int main()
   }
 }
 
-ISR(INT0_vect)
+ISR(INT2_vect)
 {
 
   if (x > 10 && y > 10 && z > 10)
