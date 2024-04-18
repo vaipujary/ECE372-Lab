@@ -23,34 +23,54 @@ typedef enum {
 typedef enum {
     LEDSMILLEY,LEDSAD
 }LEDFACES;
+volatile int x;
+volatile int y;
+volatile int z;
+volatile buttonState myButtonState = waitPress;
+volatile LEDFACES LEDState =LEDSMILLEY;
 int ChirpOn=0;//chirp=0 no chirp,1 chirping
 int main(){
     initI2C();
     initPWMTimer3();
     initSPI();
-    initTimer0();
+    initTimer1();
+    initSwitchPD2();
+    Serial.begin(9600);
 
     while(1) {
-      switch (LEDFACES)
+
+      for (int i = 1000; i <= 4000; i++) {
+      changeFrequency(i);
+      }
+
+      switch (LEDState)
       {
       case LEDSMILLEY:
-        
+        displaySmile();
+        alarmOff();
         break;
       case LEDSAD:
+        displayFrown();
         break;
       default:
         break;
       }
-      switch (buttonState)
+      switch (myButtonState)
       {
       case waitPress:
-        /* code */
+        Serial.println("waitPress");
+        delayMs(1000);
         break;
       case debouncePress:
+        Serial.println("debouncePress");
+        myButtonState = waitRelease;
         break;
       case waitRelease:
+        Serial.println("waitRelease");
         break;
       case debounceRelease:
+        Serial.println("debounceRelease");
+        myButtonState = waitPress;
         break;
       default:
         break;
@@ -59,6 +79,31 @@ int main(){
 }
 
 
-// ISR(INT2_vect) {
+ISR(INT2_vect) {
+  
+  if(x>10 && y>10 && z>10){
+    alarmOn();
+    LEDState=LEDSAD;
+  }
+  if (myButtonState == waitPress)
+  {
+    Serial.println("debouncePress");
+    myButtonState = debouncePress;
+  }
+  else if (myButtonState == waitRelease)
+  {
 
-// }
+    // if (flip == 1)
+    // {
+    //   flip = 2;
+    // }
+    // else
+    // {
+    //   flip = 1;
+    // }
+    myButtonState = debounceRelease;
+    LEDState=LEDSMILLEY;
+  }
+
+
+}

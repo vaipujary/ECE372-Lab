@@ -35,8 +35,19 @@ void initPWMTimer3()
 }
 
 // Changes frequency of the piezo buzzer
-void changeFrequency() {
-
+void changeFrequency(int frequency) 
+{
+    /*
+    // Set prescaler to 8 to generate 2000Hz
+    TCCR3B &=  ~(1 << CS30);
+    TCCR3B |= (1 << CS31);
+    TCCR3B &= ~(1 << CS32);
+    */
+OCR3A = 16000000 / frequency;
+OCR3AH = OCR3A >> 8;
+OCR3AL = OCR3A;
+OCR3AH = OCR3AH >> 1;
+OCR3AL = OCR3AL >> 1;
 }
 
 // Turns chirping sound on
@@ -49,6 +60,6 @@ void alarmOn(){
 // Turns chirping sound off
 void alarmOff(){
   TCCR3B &= ~(1 << CS30);
+  TCCR3B &= ~(1 << CS31);
+  TCCR3B &= ~(1 << CS32);
 }
-
-
