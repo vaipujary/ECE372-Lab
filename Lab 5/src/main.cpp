@@ -47,6 +47,7 @@ int main(){
       {
       case LEDSMILLEY:
         displaySmile();
+        alarmOff();
         break;
       case LEDSAD:
         displayFrown();
@@ -82,7 +83,7 @@ ISR(INT2_vect) {
   
   if(x>10 && y>10 && z>10){
     alarmOn();
-    ChirpOn=1;
+    LEDState=LEDSAD;
   }
   if (myButtonState == waitPress)
   {
@@ -101,6 +102,7 @@ ISR(INT2_vect) {
     //   flip = 1;
     // }
     myButtonState = debounceRelease;
+    LEDState=LEDSMILLEY;
   }
 
 
