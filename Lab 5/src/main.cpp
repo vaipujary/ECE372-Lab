@@ -130,6 +130,13 @@ int main()
       changeFrequency(i);
     }
 
+    if ((x >=8000) || (x <= -8000) || (z <= 13000)) {
+      displayFrown();
+    }
+    else {
+      displaySmile();
+    }
+
     switch (LEDState)
     {
     case LEDSMILEY:
@@ -138,6 +145,7 @@ int main()
       break;
     case LEDSAD:
       displayFrown();
+      alarmOn();
       break;
     default:
       break;
@@ -147,6 +155,9 @@ int main()
     {
     case waitPress:
       Serial.println("waitPress");
+        if ((x >=8000) || (x <= -8000) || (z <= 13000)) {
+          myButtonState = waitPress;
+        }
       delayMs(1000);
       break;
     case debouncePress:
@@ -172,12 +183,6 @@ int main()
 
 ISR(INT2_vect)
 {
-
-  if (x > 10 && y > 10 && z > 10)
-  {
-    alarmOn();
-    LEDState = LEDSAD;
-  }
   if (myButtonState == waitPress)
   {
     Serial.println("debouncePress");
@@ -186,6 +191,5 @@ ISR(INT2_vect)
   else if (myButtonState == waitRelease)
   {
     myButtonState = debounceRelease;
-    LEDState = LEDSMILEY;
   }
 }
