@@ -26,7 +26,6 @@ typedef enum {
 volatile int x;
 volatile int y;
 volatile int z;
-
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState =LEDSMILLEY;
 int ChirpOn=0;//chirp=0 no chirp,1 chirping
@@ -42,9 +41,10 @@ int main(){
       switch (LEDState)
       {
       case LEDSMILLEY:
-        
+        displaySmile();
         break;
       case LEDSAD:
+        displayFrown();
         break;
       default:
         break;
