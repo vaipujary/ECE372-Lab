@@ -68,15 +68,13 @@ int main()
   initSwitchPD2();
   Serial.begin(9600);
 
-    while (1)
+  while (1)
   {
-    read_From(104, 59);
+    startI2C_Trans(MPU_WHO_AM_I);
+    read_From(MPU_WHO_AM_I, 59);
     x = read_Data();
-    read_From(104, 60);
+    read_From(MPU_WHO_AM_I, 60);
     x = (x << 8) + read_Data();
-    // startI2C_Trans(MPU_WHO_AM_I);
-    // read_From(MPU_WHO_AM_I, MPU_XOUT_L);
-    // x = read_Data();
 
     // read_From(MPU_WHO_AM_I, MPU_YOUT_L);
     // y = read_Data();
