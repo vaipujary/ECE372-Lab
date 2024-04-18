@@ -74,8 +74,6 @@ int main()
   // Wake up from sleep mode
   write(0);
 
-  alarmOff();
-
   // SPI LED Matrix
   // LED Matrix brightness control
   write_execute(0x0A, 0x03);
