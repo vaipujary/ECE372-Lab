@@ -35,6 +35,14 @@ volatile int z = 0;
 // 59 and 60 for x
 // 61 and 62 for y
 // 63 and 64 for z
+
+#define XOUT_HIGH 0x3B
+#define XOUT_LOW 0x3C
+#define YOUT_HIGH 0x3D
+#define YOUT_LOW 0x3E
+#define ZOUT_HIGH 0x3F
+#define ZOUT_LOW 0x40
+
 #define MPU_WHO_AM_I 0x68
 
 #define MPU_PWR_MANAGEMENT_1_REG 0x6B
@@ -44,12 +52,12 @@ volatile int z = 0;
 #define MPU_PWR_MANAGEMENT_2 0x6C
 
 // gyro data
-#define MPU_GYRO_XOUT_H 0x43
-#define MPU_GYRO_XOUT_L 0x44
-#define MPU_GYRO_YOUT_H 0x45
-#define MPU_GYRO_YOUT_L 0x46
-#define MPU_GYRO_ZOUT_H 0x47
-#define MPU_GYRO_ZOUT_L 0x48
+// #define MPU_GYRO_XOUT_H 0x43
+// #define MPU_GYRO_XOUT_L 0x44
+// #define MPU_GYRO_YOUT_H 0x45
+// #define MPU_GYRO_YOUT_L 0x46
+// #define MPU_GYRO_ZOUT_H 0x47
+// #define MPU_GYRO_ZOUT_L 0x48
 
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState = LEDSMILEY;
@@ -71,9 +79,9 @@ int main()
   while (1)
   {
     startI2C_Trans(MPU_WHO_AM_I);
-    read_From(MPU_WHO_AM_I, 59);
+    read_From(MPU_WHO_AM_I, XOUT_HIGH);
     x = read_Data();
-    read_From(MPU_WHO_AM_I, 60);
+    read_From(MPU_WHO_AM_I, XOUT_LOW);
     x = (x << 8) + read_Data();
 
     // read_From(MPU_WHO_AM_I, MPU_YOUT_L);
