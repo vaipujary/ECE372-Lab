@@ -44,9 +44,8 @@ void changeFrequency(int frequency)
     TCCR3B |= (1 << CS31);
     TCCR3B &= ~(1 << CS32);
     */
-OCR3A = 16000000 / frequency;
-OCR3AH = OCR3A >> 8;
-OCR3AL = OCR3A;
+OCR3AH = (16000000 / frequency) >> 8;
+OCR3AL = (16000000 / frequency);
 OCR3CH = OCR3AH >> 1;
 OCR3CL = OCR3AL >> 1;
 }
