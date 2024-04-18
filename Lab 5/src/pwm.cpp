@@ -29,6 +29,7 @@ void initPWMTimer3()
     TCCR3B |= (1 << WGM32);
     TCCR3B |= (1 << WGM33); 
 
+
     TCCR3B |=  (1 << CS30);
     TCCR3B &= ~(1 << CS31);
     TCCR3B &= ~(1 << CS32);
@@ -46,8 +47,8 @@ void changeFrequency(int frequency)
 OCR3A = 16000000 / frequency;
 OCR3AH = OCR3A >> 8;
 OCR3AL = OCR3A;
-OCR3AH = OCR3AH >> 1;
-OCR3AL = OCR3AL >> 1;
+OCR3CH = OCR3AH >> 1;
+OCR3CL = OCR3AL >> 1;
 }
 
 // Turns chirping sound on
