@@ -133,10 +133,6 @@ int main()
     // read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_H);
     // zGyro = (read_Data() << 8 | c);
 
-    for (int i = 1000; i <= 4000; i++)
-    {
-      changeFrequency(i);
-    }
 
     if ((x >= 8000) || (x <= -8000) || (z <= 13000)) {
       LEDState = LEDSAD;
