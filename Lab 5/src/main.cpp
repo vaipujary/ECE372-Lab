@@ -29,20 +29,12 @@ typedef enum
   LEDSMILEY,
   LEDSAD
 } LEDFACES;
-
-volatile int x;
-volatile int y;
-volatile int z;
-
+volatile int x = 0;
+volatile int y = 0;
+volatile int z = 0;
 // 59 and 60 for x
 // 61 and 62 for y
 // 63 and 64 for z
-#define MPU_XOUT_H 0x3B
-#define MPU_XOUT_L 0x3C
-#define MPU_YOUT_H 0x3D
-#define MPU_YOUT_L 0x3E
-#define MPU_ZOUT_H 0x3F
-#define MPU_ZOUT_L 0x40
 #define MPU_WHO_AM_I 0x68
 
 #define MPU_PWR_MANAGEMENT_1_REG 0x6B
@@ -76,8 +68,12 @@ int main()
   initSwitchPD2();
   Serial.begin(9600);
 
-  while (1)
+    while (1)
   {
+    read_From(104, 59);
+    x = read_Data();
+    read_From(104, 60);
+    x = (x << 8) + read_Data();
     // startI2C_Trans(MPU_WHO_AM_I);
     // read_From(MPU_WHO_AM_I, MPU_XOUT_L);
     // x = read_Data();
@@ -137,13 +133,17 @@ int main()
       break;
     case debouncePress:
       Serial.println("debouncePress");
+      delayMs(1);
       myButtonState = waitRelease;
       break;
     case waitRelease:
       Serial.println("waitRelease");
+      Serial.flush();
+      delayMs(1);
       break;
     case debounceRelease:
       Serial.println("debounceRelease");
+      delayMs(1);
       myButtonState = waitPress;
       break;
     default:
@@ -152,7 +152,7 @@ int main()
   }
 }
 
-ISR(PCINT0_vect)
+ISR(INT0_vect)
 {
 
   if (x > 10 && y > 10 && z > 10)
