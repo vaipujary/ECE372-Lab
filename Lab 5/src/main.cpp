@@ -68,8 +68,8 @@ int main()
   initSwitchPD2();
   Serial.begin(9600);
   write_execute(0x0B, 0x07); //scanning all rows and columns
-write_execute(0x0C, 0x01); //set shutdown register to normal operation (0x01)
-write_execute(0x0F, 0x00);
+  write_execute(0x0C, 0x01); //set shutdown register to normal operation (0x01)
+  write_execute(0x0F, 0x00);
   
   while (1)
   {
