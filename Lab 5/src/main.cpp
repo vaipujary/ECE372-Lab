@@ -161,7 +161,7 @@ write_execute(0x0F, 0x00);
   }
 }
 
-ISR(INT0_vect)
+ISR(INT2_vect)
 {
 
   if (x > 10 && y > 10 && z > 10)
