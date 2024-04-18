@@ -35,7 +35,7 @@ void initPWMTimer3()
 }
 
 // Changes frequency of the piezo buzzer
-void changeFrequency(unsigned int frequency) 
+void changeFrequency(int frequency) 
 {
     /*
     // Set prescaler to 8 to generate 2000Hz

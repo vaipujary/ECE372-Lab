@@ -33,11 +33,16 @@ int main(){
     initI2C();
     initPWMTimer3();
     initSPI();
-    initTimer0();
+    initTimer1();
     initSwitchPD2();
     Serial.begin(9600);
 
     while(1) {
+
+      for (int i = 1000; i <= 4000; i++) {
+      changeFrequency(i);
+      }
+
       switch (LEDState)
       {
       case LEDSMILLEY:
