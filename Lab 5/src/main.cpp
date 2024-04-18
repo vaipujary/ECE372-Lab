@@ -58,11 +58,11 @@ int main()
 {
   Serial.begin(9600);
 
-  // Global interrupt
-  sei();
-
   // Initializations
   initI2C();
+
+  // Global interrupt
+  sei();
   initPWMTimer3();
   initSPI();
   initTimer1();
