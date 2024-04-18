@@ -29,10 +29,6 @@
 #define SLA 0x68
 
 #define PWR_MANAGEMENT_REG 0x6B
-#define MPU_PWR_CONFIG 0x09
-
-#define MPU_PWR_RESET 0x70 // resets all registers in accel to defaults
-#define MPU_PWR_MANAGEMENT_2 0x6C
 
 // Button states
 typedef enum
@@ -56,7 +52,7 @@ volatile int z = 0;
 
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState = LEDSMILEY;
-int chirpOn = 0; // chirp=0 no chirp,1 chirping
+int chirpOn = 0; // chirp = 0 no chirp, 1 chirping
 
 int main()
 {
@@ -72,7 +68,15 @@ int main()
   initTimer1();
   initSwitchPD2();
 
-  // SPI
+  startI2C_Trans(SLA);
+  // Power management
+  write(PWR_MANAGEMENT_REG);
+  // Wake up from sleep mode
+  write(0);
+  stopI2C_Trans();
+  alarmOff();
+
+  // SPI LED Matrix
   // LED Matrix brightness control
   write_execute(0x0A, 0x03);
   // Scan all rows and columns
@@ -84,13 +88,6 @@ int main()
 
   while (1)
   {
-    startI2C_Trans(SLA);
-
-    // Power management
-    write(PWR_MANAGEMENT_REG);
-    // Wake up from sleep mode
-    write(0);
-
     // Read x position
     read_From(SLA, XOUT_HIGH);
     x = read_Data();
@@ -114,7 +111,7 @@ int main()
     Serial.print("z: " + String(z) + "\n");
 
     // Check thresholds of accelerometer: if above threshold, display frown
-    if ((x >= 8000) || (x <= -8000) || (z <= 13000))
+    if ((y < 0) || (y > 7000) || (z <= 12500))
     {
       LEDState = LEDSAD;
 
