@@ -25,7 +25,7 @@
 
 #define SLA 0x68
 
-#define MPU_PWR_MANAGEMENT_1_REG 0x6B
+#define PWR_MANAGEMENT_REG 0x6B
 #define MPU_PWR_CONFIG 0x09
 
 #define MPU_PWR_RESET 0x70 // resets all registers in accel to defaults
@@ -48,6 +48,7 @@ typedef enum
   debounceRelease
 } buttonState;
 
+// LED display states
 typedef enum
 {
   LEDSMILEY,
@@ -90,6 +91,11 @@ int main()
   while (1)
   {
     startI2C_Trans(SLA);
+
+    // Power management
+    write(PWR_MANAGEMENT_REG);
+    // Wake up from sleep mode
+    write(0);
 
     read_From(SLA, XOUT_HIGH);
     x = read_Data();
