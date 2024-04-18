@@ -16,28 +16,6 @@
 #include "switch.h"
 #include "i2c.h"
 
-// Button states
-typedef enum
-{
-  waitPress,
-  debouncePress,
-  waitRelease,
-  debounceRelease
-} buttonState;
-
-typedef enum
-{
-  LEDSMILEY,
-  LEDSAD
-} LEDFACES;
-
-volatile int x = 0;
-volatile int y = 0;
-volatile int z = 0;
-// 59 and 60 for x
-// 61 and 62 for y
-// 63 and 64 for z
-
 #define XOUT_HIGH 0x3B
 #define XOUT_LOW 0x3C
 #define YOUT_HIGH 0x3D
@@ -47,7 +25,7 @@ volatile int z = 0;
 
 #define SLA 0x68
 
-#define MPU_PWR_MANAGEMENT_1_REG 0x6B
+#define PWR_MANAGEMENT_REG 0x6B
 #define MPU_PWR_CONFIG 0x09
 
 #define MPU_PWR_RESET 0x70 // resets all registers in accel to defaults
@@ -60,6 +38,29 @@ volatile int z = 0;
 // #define MPU_GYRO_YOUT_L 0x46
 // #define MPU_GYRO_ZOUT_H 0x47
 // #define MPU_GYRO_ZOUT_L 0x48
+
+// Button states
+typedef enum
+{
+  waitPress,
+  debouncePress,
+  waitRelease,
+  debounceRelease
+} buttonState;
+
+// LED display states
+typedef enum
+{
+  LEDSMILEY,
+  LEDSAD
+} LEDFACES;
+
+volatile int x = 0;
+volatile int y = 0;
+volatile int z = 0;
+// 59 and 60 for x
+// 61 and 62 for y
+// 63 and 64 for z
 
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState = LEDSMILEY;
@@ -90,6 +91,11 @@ int main()
   while (1)
   {
     startI2C_Trans(SLA);
+
+    // Power management
+    write(PWR_MANAGEMENT_REG);
+    // Wake up from sleep mode
+    write(0);
 
     read_From(SLA, XOUT_HIGH);
     x = read_Data();
