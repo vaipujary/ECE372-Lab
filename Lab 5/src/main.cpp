@@ -129,13 +129,13 @@ int main()
     {
     case LEDSMILEY:
       displaySmile();
-      alarmOff();
-      chirpOn = 0;
+      /*alarmOff();
+      chirpOn = 0;*/
       break;
     case LEDSAD:
       displayFrown();
-      chirpOn = 1;
-      alarmOn();
+      /*chirpOn = 1;
+      alarmOn();*/
       break;
     default:
       break;
@@ -177,6 +177,10 @@ int main()
 // Interrupt Service Routine
 ISR(INT2_vect)
 {
+  if(LEDState=LEDSAD){
+    LEDState=LEDSMILEY;
+    alarmOff();
+  }
   if (myButtonState == waitPress)
   {
     Serial.println("debouncePress");
