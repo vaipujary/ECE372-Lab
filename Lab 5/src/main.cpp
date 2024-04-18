@@ -100,7 +100,7 @@ int main()
   }
 }
 
-ISR(PCINT_vect)
+ISR(INT0_vect)
 {
 
   if (x > 10 && y > 10 && z > 10)
