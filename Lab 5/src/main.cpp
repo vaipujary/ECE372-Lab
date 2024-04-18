@@ -104,14 +104,18 @@ int main()
     read_From(SLA, ZOUT_HIGH);
     z = (read_Data() << 8) | z;
 
-    Serial.print("x: " + String(x) + "\n");
+    /*Serial.print("x: " + String(x) + "\n");
     Serial.print("y: " + String(y) + "\n");
-    Serial.print("z: " + String(z) + "\n");
+    Serial.print("z: " + String(z) + "\n");*/
 
     // Check thresholds of accelerometer: if above threshold, display frown
     if ((y < 0) || (y > 7000) || (z <= 12500))
     {
       LEDState = LEDSAD;
+       for (int i = 1000; i < 4000; i++)
+      {
+        changeFrequency(i);
+      }
     }
     // Else, display smiley face
     else
@@ -142,24 +146,15 @@ int main()
     case waitPress:
       Serial.println("waitPress");
       myButtonState = waitPress;
-      delayMs(1);
       break;
     case debouncePress:
       Serial.println("debouncePress");
       delayMs(1);
-      for (int i = 1000; i < 4000; i++)
-      {
-        changeFrequency(i);
-      }
+     
       myButtonState = waitRelease;
       break;
     case waitRelease:
       Serial.println("waitRelease");
-      delayMs(1);
-      for (int i = 1000; i < 4000; i++)
-      {
-        changeFrequency(i);
-      }
       break;
     case debounceRelease:
       Serial.println("debounceRelease");
@@ -180,10 +175,6 @@ int main()
 // Interrupt Service Routine
 ISR(INT2_vect)
 {
-  if(LEDState=LEDSAD){
-    LEDState=LEDSMILEY;
-    alarmOff();
-  }
   if (myButtonState == waitPress)
   {
     chirpOn = 0;
