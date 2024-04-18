@@ -43,6 +43,7 @@ int main()
   initTimer1();
   initSwitchPD2();
   Serial.begin(9600);
+
   read_Data();
   while (1)
   {
