@@ -91,16 +91,19 @@ int main()
     // Wake up from sleep mode
     write(0);
 
+    // Read x position
     read_From(SLA, XOUT_HIGH);
     x = read_Data();
     read_From(SLA, XOUT_LOW);
     x = (read_Data() << 8) | x;
 
+    // Read y position
     read_From(SLA, YOUT_LOW);
     y = read_Data();
     read_From(SLA, YOUT_HIGH);
     y = (read_Data() << 8) | y;
 
+    // Read z position
     read_From(SLA, ZOUT_LOW);
     z = read_Data();
     read_From(SLA, ZOUT_HIGH);
