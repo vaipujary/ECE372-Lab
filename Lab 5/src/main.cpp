@@ -112,11 +112,6 @@ int main()
     if ((y < 0) || (y > 7000) || (z <= 12500))
     {
       LEDState = LEDSAD;
-
-      for (int i = 1000; i < 4000; i++)
-      {
-        changeFrequency(i);
-      }
     }
     // Else, display smiley face
     else
@@ -129,13 +124,13 @@ int main()
     {
     case LEDSMILEY:
       displaySmile();
-      alarmOff();
-      chirpOn = 0;
+      /*alarmOff();
+      chirpOn = 0;*/
       break;
     case LEDSAD:
       displayFrown();
-      chirpOn = 1;
-      alarmOn();
+      /*chirpOn = 1;
+      alarmOn();*/
       break;
     default:
       break;
@@ -152,11 +147,19 @@ int main()
     case debouncePress:
       Serial.println("debouncePress");
       delayMs(1);
+      for (int i = 1000; i < 4000; i++)
+      {
+        changeFrequency(i);
+      }
       myButtonState = waitRelease;
       break;
     case waitRelease:
       Serial.println("waitRelease");
       delayMs(1);
+      for (int i = 1000; i < 4000; i++)
+      {
+        changeFrequency(i);
+      }
       break;
     case debounceRelease:
       Serial.println("debounceRelease");
@@ -177,8 +180,13 @@ int main()
 // Interrupt Service Routine
 ISR(INT2_vect)
 {
+  if(LEDState=LEDSAD){
+    LEDState=LEDSMILEY;
+    alarmOff();
+  }
   if (myButtonState == waitPress)
   {
+    chirpOn = 0;
     Serial.println("debouncePress");
     myButtonState = debouncePress;
   }
