@@ -81,13 +81,17 @@ int main()
       break;
     case debouncePress:
       Serial.println("debouncePress");
+      delayMs(1);
       myButtonState = waitRelease;
       break;
     case waitRelease:
       Serial.println("waitRelease");
+      Serial.flush();
+      delayMs(1);
       break;
     case debounceRelease:
       Serial.println("debounceRelease");
+      delayMs(1);
       myButtonState = waitPress;
       break;
     default:
@@ -96,7 +100,7 @@ int main()
   }
 }
 
-ISR(PCINT0_vect)
+ISR(PCINT_vect)
 {
 
   if (x > 10 && y > 10 && z > 10)
@@ -111,15 +115,6 @@ ISR(PCINT0_vect)
   }
   else if (myButtonState == waitRelease)
   {
-
-    // if (flip == 1)
-    // {
-    //   flip = 2;
-    // }
-    // else
-    // {
-    //   flip = 1;
-    // }
     myButtonState = debounceRelease;
     LEDState = LEDSMILLEY;
   }
