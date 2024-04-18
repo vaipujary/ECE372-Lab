@@ -16,6 +16,9 @@
 #include "switch.h"
 #include "i2c.h"
 
+// 59 and 60 for x
+// 61 and 62 for y
+// 63 and 64 for z
 #define XOUT_HIGH 0x3B
 #define XOUT_LOW 0x3C
 #define YOUT_HIGH 0x3D
@@ -50,9 +53,6 @@ typedef enum
 volatile int x = 0;
 volatile int y = 0;
 volatile int z = 0;
-// 59 and 60 for x
-// 61 and 62 for y
-// 63 and 64 for z
 
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState = LEDSMILEY;
@@ -75,9 +75,14 @@ int main()
   initTimer1();
   initSwitchPD2();
 
+  // SPI
+  // LED Matrix brightness control
+  write_execute(0x0A, 0x03);
   // Scan all rows and columns
   write_execute(0x0B, 0x07);
-  write_execute(0x0C, 0x01); // set shutdown register to normal operation (0x01)
+  // Set shutdown register to normal operation
+  write_execute(0x0C, 0x01);
+  // Set test register to normal operation
   write_execute(0x0F, 0x00);
 
   while (1)
