@@ -150,7 +150,7 @@ int main()
     case waitPress:
       Serial.println("waitPress");
       myButtonState = waitPress;
-      delayMs(1000);
+      delayMs(1);
       break;
     case debouncePress:
       Serial.println("debouncePress");
@@ -159,7 +159,6 @@ int main()
       break;
     case waitRelease:
       Serial.println("waitRelease");
-      Serial.flush();
       delayMs(1);
       break;
     case debounceRelease:
