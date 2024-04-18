@@ -113,10 +113,10 @@ int main()
     {
       LEDState = LEDSAD;
 
-      for (int i = 1000; i <= 4000; i++)
+      /*for (int i = 1000; i <= 4000; i++)
       {
         changeFrequency(i);
-      }
+      }*/
     }
     // Else, display smiley face
     else
@@ -184,6 +184,7 @@ ISR(INT2_vect)
   }
   else if (myButtonState == waitRelease)
   {
+    Serial.println("debounceRelease");
     myButtonState = debounceRelease;
   }
 }
