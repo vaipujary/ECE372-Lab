@@ -31,14 +31,6 @@
 #define MPU_PWR_RESET 0x70 // resets all registers in accel to defaults
 #define MPU_PWR_MANAGEMENT_2 0x6C
 
-// gyro data
-// #define MPU_GYRO_XOUT_H 0x43
-// #define MPU_GYRO_XOUT_L 0x44
-// #define MPU_GYRO_YOUT_H 0x45
-// #define MPU_GYRO_YOUT_L 0x46
-// #define MPU_GYRO_ZOUT_H 0x47
-// #define MPU_GYRO_ZOUT_L 0x48
-
 // Button states
 typedef enum
 {
@@ -116,8 +108,6 @@ int main()
     Serial.print("y: " + String(y) + "\n");
     Serial.print("z: " + String(z) + "\n");
 
-    // Check thresholds of accelerometer
-
     // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_L);
     // signed int a = read_Data();
     // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_H);
@@ -133,18 +123,22 @@ int main()
     // read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_H);
     // zGyro = (read_Data() << 8 | c);
 
-    for (int i = 1000; i <= 4000; i++)
+    // Check thresholds of accelerometer: if above threshold, display frown
+    if ((x >= 8000) || (x <= -8000) || (z <= 13000))
     {
-      changeFrequency(i);
-    }
-
-    if ((x >= 8000) || (x <= -8000) || (z <= 13000)) {
       LEDState = LEDSAD;
+      for (int i = 1000; i <= 4000; i++)
+      {
+        changeFrequency(i);
+      }
     }
-    else {
+    // Else, display smiley face
+    else
+    {
       LEDState = LEDSMILEY;
     }
 
+    // LED State Machine
     switch (LEDState)
     {
     case LEDSMILEY:
@@ -158,14 +152,15 @@ int main()
     default:
       break;
     }
-
+    // Button State Machine
     switch (myButtonState)
     {
     case waitPress:
       Serial.println("waitPress");
-        if ((x >=8000) || (x <= -8000) || (z <= 13000)) {
-          myButtonState = waitPress;
-        }
+      if ((x >= 8000) || (x <= -8000) || (z <= 13000))
+      {
+        myButtonState = waitPress;
+      }
       delayMs(1000);
       break;
     case debouncePress:
@@ -189,6 +184,7 @@ int main()
   }
 }
 
+// Interrupt Service Routine
 ISR(INT2_vect)
 {
   if (myButtonState == waitPress)
