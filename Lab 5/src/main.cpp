@@ -16,6 +16,7 @@
 #include "switch.h"
 #include "i2c.h"
 
+// Button states
 typedef enum
 {
   waitPress,
@@ -29,6 +30,7 @@ typedef enum
   LEDSMILEY,
   LEDSAD
 } LEDFACES;
+
 volatile int x = 0;
 volatile int y = 0;
 volatile int z = 0;
@@ -43,7 +45,7 @@ volatile int z = 0;
 #define ZOUT_HIGH 0x3F
 #define ZOUT_LOW 0x40
 
-#define MPU_WHO_AM_I 0x68
+#define SLA 0x68
 
 #define MPU_PWR_MANAGEMENT_1_REG 0x6B
 #define MPU_PWR_CONFIG 0x09
@@ -68,34 +70,41 @@ signed int xGyro = 0;
 
 int main()
 {
+  Serial.begin(9600);
+
+  // Global interrupt
   sei();
+
+  // Initializations
   initI2C();
   initPWMTimer3();
   initSPI();
   initTimer1();
   initSwitchPD2();
-  Serial.begin(9600);
-  write_execute(0x0B, 0x07); //scanning all rows and columns
-write_execute(0x0C, 0x01); //set shutdown register to normal operation (0x01)
-write_execute(0x0F, 0x00);
-  
+
+  // Scan all rows and columns
+  write_execute(0x0B, 0x07);
+  write_execute(0x0C, 0x01); // set shutdown register to normal operation (0x01)
+  write_execute(0x0F, 0x00);
+
   while (1)
   {
-    startI2C_Trans(MPU_WHO_AM_I);
-    read_From(MPU_WHO_AM_I, XOUT_HIGH);
+    startI2C_Trans(SLA);
+
+    read_From(SLA, XOUT_HIGH);
     x = read_Data();
-    read_From(MPU_WHO_AM_I, XOUT_LOW);
-    x = (x << 8) + read_Data();
+    read_From(SLA, XOUT_LOW);
+    x = (read_Data() << 8) | x;
 
-    // read_From(MPU_WHO_AM_I, MPU_YOUT_L);
-    // y = read_Data();
-    // read_From(MPU_WHO_AM_I, MPU_YOUT_H);
-    // y = (read_Data() << 8 | y);
+    read_From(SLA, YOUT_LOW);
+    y = read_Data();
+    read_From(SLA, YOUT_HIGH);
+    y = (read_Data() << 8) | y;
 
-    // read_From(MPU_WHO_AM_I, MPU_ZOUT_L);
-    // z = read_Data();
-    // read_From(MPU_WHO_AM_I, MPU_ZOUT_H);
-    // z = (read_Data() << 8 | z);
+    read_From(SLA, ZOUT_LOW);
+    z = read_Data();
+    read_From(SLA, ZOUT_HIGH);
+    z = (read_Data() << 8) | z;
 
     // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_L);
     // signed int a = read_Data();
