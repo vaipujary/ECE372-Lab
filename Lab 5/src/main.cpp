@@ -68,6 +68,7 @@ signed int xGyro = 0;
 
 int main()
 {
+  sei();
   initI2C();
   initPWMTimer3();
   initSPI();
@@ -77,34 +78,34 @@ int main()
 
   while (1)
   {
-    startI2C_Trans(MPU_WHO_AM_I);
-    read_From(MPU_WHO_AM_I, MPU_XOUT_L);
-    x = read_Data();
+    // startI2C_Trans(MPU_WHO_AM_I);
+    // read_From(MPU_WHO_AM_I, MPU_XOUT_L);
+    // x = read_Data();
 
-    read_From(MPU_WHO_AM_I, MPU_YOUT_L);
-    y = read_Data();
-    read_From(MPU_WHO_AM_I, MPU_YOUT_H);
-    y = (read_Data() << 8 | y);
+    // read_From(MPU_WHO_AM_I, MPU_YOUT_L);
+    // y = read_Data();
+    // read_From(MPU_WHO_AM_I, MPU_YOUT_H);
+    // y = (read_Data() << 8 | y);
 
-    read_From(MPU_WHO_AM_I, MPU_ZOUT_L);
-    z = read_Data();
-    read_From(MPU_WHO_AM_I, MPU_ZOUT_H);
-    z = (read_Data() << 8 | z);
+    // read_From(MPU_WHO_AM_I, MPU_ZOUT_L);
+    // z = read_Data();
+    // read_From(MPU_WHO_AM_I, MPU_ZOUT_H);
+    // z = (read_Data() << 8 | z);
 
-    read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_L);
-    signed int a = read_Data();
-    read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_H);
-    xGyro = (read_Data() << 8 | a);
+    // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_L);
+    // signed int a = read_Data();
+    // read_From(MPU_WHO_AM_I, MPU_GYRO_XOUT_H);
+    // xGyro = (read_Data() << 8 | a);
 
-    read_From(MPU_WHO_AM_I, MPU_GYRO_YOUT_L);
-    signed int b = read_Data();
-    read_From(MPU_WHO_AM_I, MPU_GYRO_YOUT_H);
-    yGyro = (read_Data() << 8 | b);
+    // read_From(MPU_WHO_AM_I, MPU_GYRO_YOUT_L);
+    // signed int b = read_Data();
+    // read_From(MPU_WHO_AM_I, MPU_GYRO_YOUT_H);
+    // yGyro = (read_Data() << 8 | b);
 
-    read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_L);
-    signed int c = read_Data();
-    read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_H);
-    zGyro = (read_Data() << 8 | c);
+    // read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_L);
+    // signed int c = read_Data();
+    // read_From(MPU_WHO_AM_I, MPU_GYRO_ZOUT_H);
+    // zGyro = (read_Data() << 8 | c);
 
     Serial.print("x: " + String(x) + "\n");
     Serial.print("y: " + String(y) + "\n");
