@@ -25,10 +25,36 @@ typedef enum {
 }LEDFACES;
 int ChirpOn=0;//chirp=0 no chirp,1 chirping
 int main(){
+    initI2C();
+    initPWMTimer3();
+    initSPI();
     initTimer0();
 
     while(1) {
-
+      switch (LEDFACES)
+      {
+      case LEDSMILLEY:
+        
+        break;
+      case LEDSAD:
+        break;
+      default:
+        break;
+      }
+      switch (buttonState)
+      {
+      case waitPress:
+        /* code */
+        break;
+      case debouncePress:
+        break;
+      case waitRelease:
+        break;
+      case debounceRelease:
+        break;
+      default:
+        break;
+      }
     }
 }
 
