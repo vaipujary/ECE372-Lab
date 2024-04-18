@@ -162,6 +162,8 @@ int main()
       Serial.println("debounceRelease");
       delayMs(1);
       myButtonState = waitPress;
+      chirpOn = 0;
+      alarmOff();
       break;
     default:
       break;
