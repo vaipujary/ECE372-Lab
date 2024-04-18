@@ -184,6 +184,7 @@ ISR(INT2_vect)
   }
   else if (myButtonState == waitRelease)
   {
+    Serial.println("debounceRelease");
     myButtonState = debounceRelease;
   }
 }
