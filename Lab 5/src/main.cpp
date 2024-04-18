@@ -136,11 +136,11 @@ int main()
       changeFrequency(i);
     }
 
-    if ((x >=8000) || (x <= -8000) || (z <= 13000)) {
-      displayFrown();
+    if ((x >= 8000) || (x <= -8000) || (z <= 13000)) {
+      LEDState = LEDSAD;
     }
     else {
-      displaySmile();
+      LEDState = LEDSMILEY;
     }
 
     switch (LEDState)
