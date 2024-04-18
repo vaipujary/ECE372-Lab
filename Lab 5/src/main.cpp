@@ -73,7 +73,7 @@ int main()
   write(PWR_MANAGEMENT_REG);
   // Wake up from sleep mode
   write(0);
-  stopI2C_Trans();
+
   alarmOff();
 
   // SPI LED Matrix
@@ -169,6 +169,9 @@ int main()
       break;
     }
   }
+
+  // Stop I2C transmission
+  stopI2C_Trans();
 }
 
 // Interrupt Service Routine
