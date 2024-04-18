@@ -57,9 +57,6 @@ volatile int z = 0;
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState = LEDSMILEY;
 int chirpOn = 0; // chirp=0 no chirp,1 chirping
-signed int yGyro = 0;
-signed int zGyro = 0;
-signed int xGyro = 0;
 
 int main()
 {
