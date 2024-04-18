@@ -27,9 +27,9 @@ typedef enum
   LEDSMILLEY,
   LEDSAD
 } LEDFACES;
-volatile int x;
-volatile int y;
-volatile int z;
+volatile int x=0;
+volatile int y=0;
+volatile int z=0;
 //59 and 60 for x
 //61 and 62 for y
 //63 and 64 for z
@@ -46,9 +46,13 @@ int main()
   initSwitchPD2();
   Serial.begin(9600);
 
-  read_Data();
+  
   while (1)
   {
+    read_From(104, 59);
+    x = read_Data();
+    read_From(104, 60);
+    x = (x<<8) + read_Data();
     Serial.print("x: " + String(x) + "\n");
     Serial.print("y: " + String(y) + "\n");
     Serial.print("z: " + String(z) + "\n");
