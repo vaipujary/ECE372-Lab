@@ -212,8 +212,6 @@ int main()
       LEDState = LEDSMILEY;
     }
 
-    delayMs(1);
-
     break;
 
   case frownQuiet:
@@ -246,8 +244,6 @@ int main()
     {
       LEDState = LEDSAD;
     }
-    delayMs(1);
-    alarmOff();
 
     break;
   default:
