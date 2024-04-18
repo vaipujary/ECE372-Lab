@@ -16,6 +16,7 @@
 #include "switch.h"
 #include "i2c.h"
 
+// Button states
 typedef enum
 {
   waitPress,
@@ -29,6 +30,7 @@ typedef enum
   LEDSMILEY,
   LEDSAD
 } LEDFACES;
+
 volatile int x = 0;
 volatile int y = 0;
 volatile int z = 0;
@@ -68,14 +70,20 @@ signed int xGyro = 0;
 
 int main()
 {
+  Serial.begin(9600);
+
+  // Global interrupt
   sei();
+
+  // Initializations
   initI2C();
   initPWMTimer3();
   initSPI();
   initTimer1();
   initSwitchPD2();
-  Serial.begin(9600);
-  write_execute(0x0B, 0x07); // scanning all rows and columns
+
+  // Scan all rows and columns
+  write_execute(0x0B, 0x07);
   write_execute(0x0C, 0x01); // set shutdown register to normal operation (0x01)
   write_execute(0x0F, 0x00);
 
