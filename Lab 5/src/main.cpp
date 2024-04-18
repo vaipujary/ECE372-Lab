@@ -132,9 +132,11 @@ int main()
     case LEDSMILEY:
       displaySmile();
       alarmOff();
+      chirpOn = 0;
       break;
     case LEDSAD:
       displayFrown();
+      chirpOn = 1;
       alarmOn();
       break;
     default:
