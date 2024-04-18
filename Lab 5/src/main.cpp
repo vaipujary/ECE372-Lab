@@ -16,28 +16,6 @@
 #include "switch.h"
 #include "i2c.h"
 
-// Button states
-typedef enum
-{
-  waitPress,
-  debouncePress,
-  waitRelease,
-  debounceRelease
-} buttonState;
-
-typedef enum
-{
-  LEDSMILEY,
-  LEDSAD
-} LEDFACES;
-
-volatile int x = 0;
-volatile int y = 0;
-volatile int z = 0;
-// 59 and 60 for x
-// 61 and 62 for y
-// 63 and 64 for z
-
 #define XOUT_HIGH 0x3B
 #define XOUT_LOW 0x3C
 #define YOUT_HIGH 0x3D
@@ -60,6 +38,28 @@ volatile int z = 0;
 // #define MPU_GYRO_YOUT_L 0x46
 // #define MPU_GYRO_ZOUT_H 0x47
 // #define MPU_GYRO_ZOUT_L 0x48
+
+// Button states
+typedef enum
+{
+  waitPress,
+  debouncePress,
+  waitRelease,
+  debounceRelease
+} buttonState;
+
+typedef enum
+{
+  LEDSMILEY,
+  LEDSAD
+} LEDFACES;
+
+volatile int x = 0;
+volatile int y = 0;
+volatile int z = 0;
+// 59 and 60 for x
+// 61 and 62 for y
+// 63 and 64 for z
 
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDState = LEDSMILEY;
