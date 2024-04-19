@@ -60,7 +60,7 @@ volatile int z = 0;
 
 volatile LEDStates ledState = smileQuiet;
 volatile buttonState myButtonState = waitPress;
-volatile LEDFACES LEDState = LEDSMILEY;
+volatile LEDFACES LEDFaceState = LEDSMILEY;
 int chirpOn = 0; // chirp = 0 no chirp, 1 chirping
 
 int main()
@@ -118,7 +118,7 @@ int main()
     Serial.print("z: " + String(z) + "\n");
 
     // LED State Machine
-    switch (LEDState)
+    switch (LEDFaceState)
     {
     case LEDSMILEY:
       displaySmile();
@@ -187,13 +187,13 @@ int main()
     // Check thresholds of accelerometer: if above threshold, display frown
     if ((y < 0) || (y > 7000) || (z <= 12500))
     {
-      LEDState = LEDSAD;
+      LEDFaceState = LEDSAD;
       ledState = frownLoud;
     }
     // Else, display smiley face
     else
     {
-      LEDState = LEDSMILEY;
+      LEDFaceState = LEDSMILEY;
     }
     break;
 
@@ -203,13 +203,13 @@ int main()
     // Check thresholds of accelerometer: if above threshold, display frown
     if ((y < 0) || (y > 7000) || (z <= 12500))
     {
-      LEDState = LEDSAD;
+      LEDFaceState = LEDSAD;
       ledState = frownLoud;
     }
     // Else, display smiley face
     else
     {
-      LEDState = LEDSMILEY;
+      LEDFaceState = LEDSMILEY;
     }
 
     break;
@@ -220,13 +220,13 @@ int main()
     // Check thresholds of accelerometer: if above threshold, display frown
     if ((y < 0) || (y > 7000) || (z <= 12500))
     {
-      LEDState = LEDSMILEY;
+      LEDFaceState = LEDSMILEY;
       ledState = smileQuiet;
     }
     // Else, display smiley face
     else
     {
-      LEDState = LEDSAD;
+      LEDFaceState = LEDSAD;
     }
     break;
 
@@ -236,13 +236,13 @@ int main()
     // Check thresholds of accelerometer: if above threshold, display frown
     if ((y < 0) || (y > 7000) || (z <= 12500))
     {
-      LEDState = LEDSMILEY;
+      LEDFaceState = LEDSMILEY;
       ledState = smileLoud;
     }
     // Else, display smiley face
     else
     {
-      LEDState = LEDSAD;
+      LEDFaceState = LEDSAD;
     }
 
     break;
