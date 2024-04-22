@@ -13,6 +13,7 @@
 #include "timer.h"
 #include "pwm.h"
 #include "switch.h"
+#include "lcd.h"
 #include <stdio.h>
 
 /*
@@ -59,6 +60,9 @@ int main(void)
     initRFID();         // Initialize RFID module
     initSwitchPD0();    // Initialize switch
     initTimer1();       // Initialize timer
+
+    moveCursor(0, 0); // moves the cursor to 0,0 position
+    writeString("Snack Dispenser");
 
     rfidUID = readRFID();
 
@@ -109,13 +113,17 @@ int main(void)
                 if (rfidUID == UID_list[i])
                 {
                     Serial.println('RFID UID Authorized');
-                    motorCCW(); // Dispense the snacks
+                    motorCCW();       // Dispense the snacks. // Have to adjust direction of rotation based on experimentation.
+                    moveCursor(0, 0); // moves the cursor to 0,0 position
+                    writeString("Enjoy the snacks!");
                     delayMs(5000);
                 }
             }
         }
         else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
         {
+            moveCursor(0, 0); // moves the cursor to 0,0 position
+            writeString("Snack thief alert!");
         }
     }
 }
