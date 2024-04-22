@@ -53,6 +53,7 @@ int main(void)
             ///////////////////////////////Press States/////////////////////////////////////////
         case waitPress: // the "natural" state
             // Do nothing, wait for button to be pressed
+            Serial.println("waitPress");
             Serial.println(1);
             break;
 
