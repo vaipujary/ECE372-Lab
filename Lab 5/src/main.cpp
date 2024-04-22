@@ -10,6 +10,7 @@
 
 #include <Arduino.h>
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include "spi.h"
 #include "pwm.h"
 #include "timer.h"
@@ -94,7 +95,8 @@ int main()
 
   while (1)
   {
-    for (int i = 1000; i <= 4000; i++) {
+    for (int i = 1000; i <= 4000; i++)
+    {
       changeFrequency(i);
     }
 
@@ -102,19 +104,19 @@ int main()
     read_From(SLA, XOUT_HIGH);
     x = read_Data();
     read_From(SLA, XOUT_LOW);
-    x = (read_Data() << 8) | x;
+    x = (x << 8) | read_Data();
 
     // Read y position
-    read_From(SLA, YOUT_LOW);
-    y = read_Data();
     read_From(SLA, YOUT_HIGH);
-    y = (read_Data() << 8) | y;
+    y = read_Data();
+    read_From(SLA, YOUT_LOW);
+    y = (y << 8) | read_Data();
 
     // Read z position
-    read_From(SLA, ZOUT_LOW);
-    z = read_Data();
     read_From(SLA, ZOUT_HIGH);
-    z = (read_Data() << 8) | z;
+    z = read_Data();
+    read_From(SLA, ZOUT_LOW);
+    z = (z << 8) | read_Data();
 
     Serial.print("x: " + String(x) + "\n");
     Serial.print("y: " + String(y) + "\n");
@@ -132,8 +134,6 @@ int main()
     default:
       break;
     }
-
-
 
     // Button state machine logic
     switch (myButtonState)
@@ -182,80 +182,79 @@ int main()
     default:
       break;
     }
-  
 
-  // LED State Machine
-  switch (ledState)
-  {
-  case smileQuiet:
-    Serial.println("smileQuiet");
-    alarmOff();
-    // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 9000) || (z <= 15000))
+    // LED State Machine
+    switch (ledState)
     {
-      LEDFaceState = LEDSAD;
-      ledState = frownLoud;
-    }
-    // Else, display smiley face
-    else
-    {
-      LEDFaceState = LEDSMILEY;
-    }
-    break;
-
-  case smileLoud:
-    Serial.println("smileLoud");
-
-    // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 9000) || (z <= 15000))
-    {
-      LEDFaceState = LEDSAD;
-      ledState = frownLoud;
-    }
-    // Else, display smiley face
-    else
-    {
+    case smileQuiet:
+      Serial.println("smileQuiet");
       alarmOff();
-      LEDFaceState = LEDSMILEY;
-    }
+      // Check thresholds of accelerometer: if above threshold, display frown
+      if ((y < 0) || (y > 9000) || (z <= 15000))
+      {
+        LEDFaceState = LEDSAD;
+        ledState = frownLoud;
+      }
+      // Else, display smiley face
+      else
+      {
+        LEDFaceState = LEDSMILEY;
+      }
+      break;
 
-    break;
+    case smileLoud:
+      Serial.println("smileLoud");
 
-  case frownQuiet:
-    Serial.println("frownQuiet");
-    alarmOff();
-    // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 9000) || (z <= 15000))
-    {
-      LEDFaceState = LEDSMILEY;
-      ledState = smileQuiet;
-    }
-    // Else, display smiley face
-    else
-    {
-      LEDFaceState = LEDSAD;
-    }
-    break;
+      // Check thresholds of accelerometer: if above threshold, display frown
+      if ((y < 0) || (y > 9000) || (z <= 15000))
+      {
+        LEDFaceState = LEDSAD;
+        ledState = frownLoud;
+      }
+      // Else, display smiley face
+      else
+      {
+        alarmOff();
+        LEDFaceState = LEDSMILEY;
+      }
 
-  case frownLoud:
-    Serial.println("frownLoud");
-    alarmOn();
-    // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 9000) || (z <= 15000))
-    {
-      LEDFaceState = LEDSMILEY;
-      ledState = smileLoud;
-    }
-    // Else, display smiley face
-    else
-    {
-      LEDFaceState = LEDSAD;
-    }
+      break;
 
-    break;
-  default:
-    break;
-  }
+    case frownQuiet:
+      Serial.println("frownQuiet");
+      alarmOff();
+      // Check thresholds of accelerometer: if above threshold, display frown
+      if ((y < 0) || (y > 9000) || (z <= 15000))
+      {
+        LEDFaceState = LEDSMILEY;
+        ledState = smileQuiet;
+      }
+      // Else, display smiley face
+      else
+      {
+        LEDFaceState = LEDSAD;
+      }
+      break;
+
+    case frownLoud:
+      Serial.println("frownLoud");
+      alarmOn();
+      // Check thresholds of accelerometer: if above threshold, display frown
+      if ((y < 0) || (y > 9000) || (z <= 15000))
+      {
+        LEDFaceState = LEDSMILEY;
+        ledState = smileLoud;
+      }
+      // Else, display smiley face
+      else
+      {
+        LEDFaceState = LEDSAD;
+      }
+
+      break;
+    default:
+      break;
+    }
   }
   // Stop I2C transmission
   stopI2C_Trans();
