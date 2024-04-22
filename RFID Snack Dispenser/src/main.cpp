@@ -101,7 +101,7 @@ int main(void)
             break;
         }
 
-        if (operationMode == normal) // Dispense snacks, turn LEDs green, display success message on lcd
+        if (operationMode == normal) // Dispense snacks, turn green LEDs on, display success message on lcd
         {
             for (int i = 0; i < UID_LIST_SIZE; i++)
             {
@@ -114,7 +114,7 @@ int main(void)
                 }
             }
         }
-        else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn LEDs red, display error message on lcd
+        else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
         {
         }
     }
