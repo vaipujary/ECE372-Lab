@@ -6,6 +6,6 @@
 extern MFRC522 mfrc522;
 
 void init_rfid();
-int read_rfid();
+int readRFID();
 
 #endif

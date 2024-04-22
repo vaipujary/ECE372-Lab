@@ -20,7 +20,7 @@ void init_rfid()
     mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD - MFRC522 Card Reader details
 }
 
-int read_rfid()
+int readRFID()
 {
 
     // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
