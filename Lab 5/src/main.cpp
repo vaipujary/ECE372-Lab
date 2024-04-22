@@ -61,7 +61,6 @@ volatile int z = 0;
 volatile LEDStates ledState = smileQuiet;
 volatile buttonState myButtonState = waitPress;
 volatile LEDFACES LEDFaceState = LEDSMILEY;
-int chirpOn = 0; // chirp = 0 no chirp, 1 chirping
 
 int main()
 {
@@ -95,6 +94,10 @@ int main()
 
   while (1)
   {
+    for (int i = 1000; i <= 4000; i++) {
+      changeFrequency(i);
+    }
+
     // Read x position
     read_From(SLA, XOUT_HIGH);
     x = read_Data();
@@ -129,6 +132,8 @@ int main()
     default:
       break;
     }
+
+
 
     // Button state machine logic
     switch (myButtonState)
@@ -177,15 +182,16 @@ int main()
     default:
       break;
     }
-  }
+  
+
   // LED State Machine
   switch (ledState)
   {
   case smileQuiet:
     Serial.println("smileQuiet");
-
+    alarmOff();
     // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 7000) || (z <= 12500))
+    if ((y < 0) || (y > 9000) || (z <= 15000))
     {
       LEDFaceState = LEDSAD;
       ledState = frownLoud;
@@ -201,7 +207,7 @@ int main()
     Serial.println("smileLoud");
 
     // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 7000) || (z <= 12500))
+    if ((y < 0) || (y > 9000) || (z <= 15000))
     {
       LEDFaceState = LEDSAD;
       ledState = frownLoud;
@@ -209,6 +215,7 @@ int main()
     // Else, display smiley face
     else
     {
+      alarmOff();
       LEDFaceState = LEDSMILEY;
     }
 
@@ -216,9 +223,9 @@ int main()
 
   case frownQuiet:
     Serial.println("frownQuiet");
-
+    alarmOff();
     // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 7000) || (z <= 12500))
+    if ((y < 0) || (y > 9000) || (z <= 15000))
     {
       LEDFaceState = LEDSMILEY;
       ledState = smileQuiet;
@@ -232,9 +239,9 @@ int main()
 
   case frownLoud:
     Serial.println("frownLoud");
-
+    alarmOn();
     // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 7000) || (z <= 12500))
+    if ((y < 0) || (y > 9000) || (z <= 15000))
     {
       LEDFaceState = LEDSMILEY;
       ledState = smileLoud;
@@ -249,7 +256,7 @@ int main()
   default:
     break;
   }
-
+  }
   // Stop I2C transmission
   stopI2C_Trans();
 }
