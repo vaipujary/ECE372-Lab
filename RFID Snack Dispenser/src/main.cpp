@@ -15,33 +15,51 @@
 #include "switch.h"
 #include <stdio.h>
 
+/*
+ * Pin layout should be as follows for the MFRC522 board:
+ * Signal     Pin              Pin
+ *            Arduino Mega     MFRC522 board
+ * -----------------------------------------------
+ * Reset      46               RST
+ * SPI SS     53               SDA
+ * SPI MOSI   51               MOSI
+ * SPI MISO   50               MISO
+ * SPI SCK    52               SCK
+ */
+
 // Global variables and macros
 #define RST_PIN 9 // Configurable, see typical pin layout above
 #define SS_PIN 53 // Configurable, see typical pin layout above
+#define UID_LIST_SIZE 10
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
 int rfidUID = 0;
-int UID_list[10];
+int UID_list[UID_LIST_SIZE];
 
 typedef enum
 {
     waitPress,
     debouncePress,
     waitRelease,
-    debounceRelease
-} buttonState;
+    debounceRelease,
+    normal,
+    emergency
+} state;
 
-volatile buttonState myButtonState = waitPress;
+volatile state myButtonState = waitPress;
+volatile state operationMode = normal;
 
 // Main function
 int main(void)
 {
     sei();              // Enable global interrupts
     Serial.begin(9600); // Initialize serial port
-    initSPI();
-    initRFID();
-    initSwitchPD0();
+    initSPI();          // Initialize SPI communication
+    initRFID();         // Initialize RFID module
+    initSwitchPD0();    // Initialize switch
+    initTimer1();       // Initialize timer
+
     rfidUID = readRFID();
 
     while (1)
@@ -57,7 +75,7 @@ int main(void)
             Serial.println(1);
             break;
 
-        case debouncePress: // Debounce Press state, wait for swithc debounce state to end
+        case debouncePress: // Debounce Press state, wait for switch debounce state to end
             Serial.println("debouncePress");
             Serial.flush();
             delayMs(1);
@@ -82,6 +100,23 @@ int main(void)
         default:
             break;
         }
+
+        if (operationMode == normal) // Dispense snacks, turn LEDs green, display success message on lcd
+        {
+            for (int i = 0; i < UID_LIST_SIZE; i++)
+            {
+                // User is authorized, activate the motor
+                if (rfidUID == UID_list[i])
+                {
+                    Serial.println('RFID UID Authorized');
+                    motorCCW(); // Dispense the snacks
+                    delayMs(5000);
+                }
+            }
+        }
+        else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn LEDs red, display error message on lcd
+        {
+        }
     }
 }
 
@@ -99,5 +134,15 @@ ISR(PCINT0_vect)
     {
         Serial.println("waitRelease --> debounceRelease");
         myButtonState = debounceRelease;
+
+        if (operationMode == normal)
+        {
+            operationMode = emergency;
+        }
+
+        else
+        {
+            operationMode = normal;
+        }
     }
 }
