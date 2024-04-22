@@ -24,7 +24,7 @@
     while (!(SPSR & (1 << SPIF))) \
         ;
 
-void SPI_MASTER_Init()
+void initSPI()
 {
     // set MOSI,SCK,and SS direction to outputs
     DDR_SPI = (1 << DD_MOSI) | (1 << DD_SCK) | (1 << DD_SS);

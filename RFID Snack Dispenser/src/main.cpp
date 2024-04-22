@@ -12,8 +12,8 @@
 #include "spi.h"
 #include "timer.h"
 #include "pwm.h"
+#include "switch.h"
 #include <stdio.h>
-using namespace std;
 
 // Global variables and macros
 #define RST_PIN 9 // Configurable, see typical pin layout above
@@ -27,7 +27,11 @@ int UID_list[10];
 // Main function
 int main(void)
 {
-
+    sei();              // Enable global interrupts
+    Serial.begin(9600); // Initialize serial port
+    initSPI();
+    initRFID();
+    initSwitchPD0();
     rfidUID = readRFID();
 }
 

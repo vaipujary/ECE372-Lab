@@ -11,7 +11,7 @@
 #include "rfid.h"
 #include "spi.h"
 
-void init_rfid()
+void initRFID()
 {
 
     // SPI.begin();			// Init SPI bus
