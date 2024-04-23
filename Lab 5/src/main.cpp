@@ -122,6 +122,7 @@ int main()
     Serial.print("y: " + String(y) + "\n");
     Serial.print("z: " + String(z) + "\n");
 
+    //threshold check
     if ((x >=8000) || (x <= -8000) || (z <= 13000)) {
       displayFrown();
     }
