@@ -179,7 +179,7 @@ int main()
       Serial.println("smileQuiet");
       alarmOff();
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((y < 0) || (y > 9000) || (z <= 15000))
+      if ((x >=8000) || (x <= -8000) || (z <= 13000))
       {
         ledState = frownLoud;
       }
@@ -209,7 +209,7 @@ int main()
       Serial.println("frownQuiet");
       alarmOff();
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((y < 0) || (y > 9000) || (z <= 15000))
+      if ((x >=8000) || (x <= -8000) || (z <= 13000))
       {
         ledState = smileQuiet;
       }
