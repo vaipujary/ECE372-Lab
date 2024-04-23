@@ -95,7 +95,7 @@ int main()
 
   while (1)
   {
-    for (int i = 1000; i <= 4000; i++)
+    for (int i = 1000; i < 4000; i++)
     {
       changeFrequency(i);
     }
@@ -122,19 +122,14 @@ int main()
     Serial.print("y: " + String(y) + "\n");
     Serial.print("z: " + String(z) + "\n");
 
-    // LED State Machine
-    switch (LEDFaceState)
-    {
-    case LEDSMILEY:
-      displaySmile();
-      break;
-    case LEDSAD:
+    if ((x >=8000) || (x <= -8000) || (z <= 13000)) {
       displayFrown();
-      break;
-    default:
-      break;
+    }
+    else {
+      displaySmile();
     }
 
+    
     // Button state machine logic
     switch (myButtonState)
     {
@@ -142,12 +137,16 @@ int main()
     case waitPress: // the "natural" state
       // Do nothing, wait for button to be pressed
       Serial.println(1);
+      if (!(PIND & (1 << PD2))) {
+        alarmOff();
+      }
       break;
 
     case debouncePress: // Debounce Press state, wait for swithc debounce state to end
       Serial.println("debouncePress");
       Serial.flush();
       delayMs(1);
+      alarmOff();
       myButtonState = waitRelease;
       break;
 
@@ -156,25 +155,16 @@ int main()
       Serial.println("waitRelease");
       Serial.flush();
       delayMs(1);
-
+      alarmOff();
+      if (PIND & (1 << PD2)) {
+        myButtonState = debounceRelease;
+      }
       break;
 
     case debounceRelease:
       Serial.println("debounceRelease");
       Serial.flush();
       delayMs(1);
-
-      if (ledState == frownLoud)
-      {
-        alarmOff();
-        Serial.println("frownQuiet");
-        ledState = frownQuiet;
-      }
-      else if (ledState == smileLoud)
-      {
-        Serial.println("smileQuiet");
-        ledState = smileQuiet;
-      }
 
       myButtonState = waitPress;
       break;
@@ -190,32 +180,27 @@ int main()
       Serial.println("smileQuiet");
       alarmOff();
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((y < 0) || (y > 9000) || (z <= 15000))
+      if ((x >=8000) || (x <= -8000) || (z <= 13000))
       {
-        LEDFaceState = LEDSAD;
         ledState = frownLoud;
       }
       // Else, display smiley face
       else
       {
-        LEDFaceState = LEDSMILEY;
       }
       break;
 
     case smileLoud:
       Serial.println("smileLoud");
-
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((y < 0) || (y > 9000) || (z <= 15000))
+      if ((x >=8000) || (x <= -8000) || (z <= 13000))
       {
-        LEDFaceState = LEDSAD;
+        alarmOn();
         ledState = frownLoud;
       }
       // Else, display smiley face
       else
       {
-        alarmOff();
-        LEDFaceState = LEDSMILEY;
       }
 
       break;
@@ -224,31 +209,27 @@ int main()
       Serial.println("frownQuiet");
       alarmOff();
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((y < 0) || (y > 9000) || (z <= 15000))
+      if ((x >=8000) || (x <= -8000) || (z <= 13000))
       {
-        LEDFaceState = LEDSMILEY;
         ledState = smileQuiet;
       }
       // Else, display smiley face
       else
       {
-        LEDFaceState = LEDSAD;
       }
       break;
 
     case frownLoud:
       Serial.println("frownLoud");
-      alarmOn();
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((y < 0) || (y > 9000) || (z <= 15000))
+      if ((x >=8000) || (x <= -8000) || (z <= 13000))
       {
-        LEDFaceState = LEDSMILEY;
+        alarmOn();
         ledState = smileLoud;
       }
       // Else, display smiley face
       else
       {
-        LEDFaceState = LEDSAD;
       }
 
       break;
@@ -265,12 +246,10 @@ ISR(INT2_vect)
 {
   if (myButtonState == waitPress)
   {
-    Serial.println("waitpress --> debounce press");
     myButtonState = debouncePress;
   }
   else if (myButtonState == waitRelease)
   {
-    Serial.println("waitRelease --> debounce release");
     myButtonState = debounceRelease;
   }
 }

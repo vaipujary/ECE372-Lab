@@ -9,7 +9,7 @@
 //----------------------------------------------------------------------//
 
 #include <avr/io.h>
-
+#include <avr/interrupt.h>
 /*
  * Initializes pull-up resistor on PD2 and sets it into input mode
  */
