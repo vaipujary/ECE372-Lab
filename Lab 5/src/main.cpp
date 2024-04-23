@@ -165,7 +165,6 @@ int main()
       Serial.println("debounceRelease");
       Serial.flush();
       delayMs(1);
-
       myButtonState = waitPress;
       break;
 
@@ -180,7 +179,7 @@ int main()
       Serial.println("smileQuiet");
       alarmOff();
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((x >=8000) || (x <= -8000) || (z <= 13000))
+      if ((y < 0) || (y > 9000) || (z <= 15000))
       {
         ledState = frownLoud;
       }
@@ -192,6 +191,7 @@ int main()
 
     case smileLoud:
       Serial.println("smileLoud");
+
       // Check thresholds of accelerometer: if above threshold, display frown
       if ((x >=8000) || (x <= -8000) || (z <= 13000))
       {
@@ -209,7 +209,7 @@ int main()
       Serial.println("frownQuiet");
       alarmOff();
       // Check thresholds of accelerometer: if above threshold, display frown
-      if ((x >=8000) || (x <= -8000) || (z <= 13000))
+      if ((y < 0) || (y > 9000) || (z <= 15000))
       {
         ledState = smileQuiet;
       }
