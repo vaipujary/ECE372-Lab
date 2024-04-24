@@ -116,7 +116,7 @@ int main(void)
                 {
                     Serial.println("RFID UID Authorized!");
 
-                    // motorCCW();       // Dispense the snacks. // Have to adjust direction of rotation based on experimentation.
+                    motorCCW(); // Dispense the snacks. // Have to adjust direction of rotation based on experimentation.
                     // moveCursor(0, 0); // moves the cursor to 0,0 position
                     // writeString("Enjoy the snacks!");
                     delayMs(1000);
