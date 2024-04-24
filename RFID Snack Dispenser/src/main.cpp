@@ -36,8 +36,8 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
 int rfidUID = 0;
-int UID_list[UID_LIST_SIZE] = {609, 359};
-// Vaidehi card: 609, tag 359
+int Authorized_UID_list[UID_LIST_SIZE] = {609, 359};
+// Vaidehi card: 609, tag: 359
 
 typedef enum
 {
@@ -111,7 +111,7 @@ int main(void)
             for (int i = 0; i < UID_LIST_SIZE; i++)
             {
                 // User is authorized, activate the motor
-                if (rfidUID == UID_list[i] && rfidUID != 0)
+                if (rfidUID == Authorized_UID_list[i] && rfidUID != 0)
                 {
                     Serial.println("RFID UID Authorized!");
 
