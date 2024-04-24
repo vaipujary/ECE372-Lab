@@ -38,6 +38,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 int rfidUID = 0;
 int Authorized_UID_list[UID_LIST_SIZE] = {609, 359};
 // Vaidehi card: 609, tag: 359
+// Logan card: 638, tag: 353
 
 typedef enum
 {
