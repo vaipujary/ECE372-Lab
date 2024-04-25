@@ -56,7 +56,7 @@ int main(void)
     Serial.begin(9600); // Initialize serial port
     initSPI();          // Initialize SPI communication
     initRFID();         // Initialize RFID module
-    initSwitchPD0();    // Initialize switch
+    initSwitchPD2();    // Initialize switch
     initTimer1();       // Initialize timers
     initTimer0();
     initPWMTimer3();
