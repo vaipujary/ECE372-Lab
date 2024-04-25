@@ -128,6 +128,7 @@ int main(void)
         else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
         {
             Serial.println("Snack thief alert!");
+            changeDutyCycle(512);
             // moveCursor(0, 0); // moves the cursor to 0,0 position
             // writeString("Snack thief alert!");
         }
