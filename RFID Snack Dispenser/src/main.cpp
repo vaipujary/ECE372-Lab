@@ -64,10 +64,10 @@ int main(void)
     // writeString("Snack Dispenser");
     while (1)
     {
-
         rfidUID = readRFID();
         Serial.print("Main function The UID is: ");
         Serial.println(rfidUID);
+
         // Button state machine logic
         switch (myButtonState)
         {
@@ -103,8 +103,10 @@ int main(void)
             break;
         }
 
+        // Normal operation mode
         if (operationMode == normal) // Dispense snacks, turn green LEDs on, display success message on lcd
         {
+            Serial.println("Normal operation mode");
             changeDutyCycle(512);
             if (isAuthorized(rfidUID))
             {
@@ -123,8 +125,11 @@ int main(void)
                 rfidUID = readRFID(); // Get updated reading of UID
             }
         }
-        else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
+
+        // Emergency operation mode
+        else // Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
         {
+            Serial.println("!!!Emergency operation mode!!!");
             Serial.println("Snack thief alert!");
             changeDutyCycle(512);
             // moveCursor(0, 0); // moves the cursor to 0,0 position
