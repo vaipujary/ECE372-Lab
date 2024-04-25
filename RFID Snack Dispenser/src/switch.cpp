@@ -9,6 +9,7 @@ void initSwitchPD2()
 
     PORTD |= (1 << PORTD2); // Enable pull up resistor (stable input)
 
+    EICRA |= (1 << ISC20);
     EIFR |= (1 << INTF2); // External Interrupt Mask Register
     EIMSK |= (1 << INT2); // External Interrupt Flag Register
 }

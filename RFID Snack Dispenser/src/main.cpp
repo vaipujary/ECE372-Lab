@@ -60,18 +60,20 @@ int main(void)
     initTimer1();       // Initialize timers
     initTimer0();
     initPWMTimer3();
-    // moveCursor(0, 0); // moves the cursor to 0,0 position
-    // writeString("Snack Dispenser");
+    initLCD();
+    moveCursor(0, 0); // moves the cursor to 0,0 position
+    writeString("Snack Dispenser");
+
     while (1)
     {
         rfidUID = readRFID();
-        // Serial.print("Main function The UID is: ");
-        // Serial.println(rfidUID);
+        Serial.print("The UID is: ");
+        Serial.println(rfidUID);
 
         // Button state machine logic
         switch (myButtonState)
         {
-            ///////////////////////////////Press States/////////////////////////////////////////
+        ///////////////////////////////Press States/////////////////////////////////////////
         case waitPress: // the "natural" state
             // Do nothing, wait for button to be pressed
             Serial.println("waitPress!!!!!");
@@ -111,8 +113,8 @@ int main(void)
                 {
                     changeDutyCycle(0);
                 }
-                //     moveCursor(0, 0); // moves the cursor to 0,0 position
-                //     writeString("Enjoy the snacks!");
+                moveCursor(1, 0); // moves the cursor to 0,0 position
+                writeString("Enjoy the snacks!");
                 //    delayMs(1000);
                 rfidUID = readRFID(); // Get updated reading of UID
                 changeDutyCycle(512);
@@ -123,10 +125,10 @@ int main(void)
         else // Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
         {
             Serial.println("!!!Emergency operation mode!!!");
-            Serial.println("Snack thief alert!");
             changeDutyCycle(512);
-            // moveCursor(0, 0); // moves the cursor to 0,0 position
-            // writeString("Snack thief alert!");
+            delayMs(1000);
+            moveCursor(1, 0); // moves the cursor to 0,0 position
+            writeString("Snack thief!!!!!");
         }
     }
 }
@@ -139,12 +141,23 @@ ISR(INT2_vect)
     if (myButtonState == waitPress)
     {
         Serial.println("waitPress --> debouncePress");
+        if (operationMode == normal)
+        {
+            Serial.println("ENTERING EMERGENCY MODE");
+            operationMode = emergency;
+        }
+
+        else
+        {
+            Serial.println("NORMAL MODE");
+            operationMode = normal;
+        }
+
         myButtonState = debouncePress;
     }
     else if (myButtonState == waitRelease)
     {
         Serial.println("waitRelease --> debounceRelease");
-        myButtonState = debounceRelease;
 
         if (operationMode == normal)
         {
@@ -154,8 +167,9 @@ ISR(INT2_vect)
 
         else
         {
-            Serial.println("ENTERING NORMAL MODE");
+            Serial.println("NORMAL MODE");
             operationMode = normal;
         }
+        myButtonState = debounceRelease;
     }
 }
