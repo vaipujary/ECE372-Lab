@@ -133,7 +133,6 @@ int main(void)
 
 // Interrupt Service Routine
 ISR(INT2_vect)
-ISR(INT2_vect)
 {
     Serial.println("Button pressed!");
 
