@@ -34,7 +34,7 @@ void initPWMTimer3()
     TCCR3B |= (1 << WGM32);
     TCCR3B |= (1 << WGM33);
 
-    // 256 prescalar
+    // 256 prescalar value
     // Top value: OCR3A
     // f_PWM = f_CLK / (prescaler * (1 + Top value))
     TCCR3B &= ~(1 << CS30);
