@@ -65,8 +65,8 @@ int main(void)
     while (1)
     {
         rfidUID = readRFID();
-        Serial.print("Main function The UID is: ");
-        Serial.println(rfidUID);
+        // Serial.print("Main function The UID is: ");
+        // Serial.println(rfidUID);
 
         // Button state machine logic
         switch (myButtonState)
@@ -102,7 +102,6 @@ int main(void)
         if (operationMode == normal) // Dispense snacks, turn green LEDs on, display success message on lcd
         {
             Serial.println("Normal operation mode");
-            changeDutyCycle(512);
             if (isAuthorized(rfidUID))
             {
                 // Dispense the snacks. Motor moves counterclockwise by default
@@ -116,6 +115,7 @@ int main(void)
                 //     writeString("Enjoy the snacks!");
                 //    delayMs(1000);
                 rfidUID = readRFID(); // Get updated reading of UID
+                changeDutyCycle(512);
             }
         }
 

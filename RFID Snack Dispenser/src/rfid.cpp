@@ -29,20 +29,20 @@ int readRFID()
     // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
     if (!mfrc522.PICC_IsNewCardPresent())
     {
-        Serial.println("New card not present");
+        // Serial.println("New card not present");
         return 0;
     }
 
     // Select one of the cards
     else if (!mfrc522.PICC_ReadCardSerial())
     {
-        Serial.println("Cannot read card");
+        // Serial.println("Cannot read card");
         return 0;
     }
 
     // UID extraction
     int num = 0;
-    Serial.print("RFID Function Card UID: ");
+    // Serial.print("RFID Function Card UID: ");
     for (byte i = 0; i < mfrc522.uid.size; i++)
     {
         num = num + mfrc522.uid.uidByte[i];
