@@ -12,6 +12,11 @@
 #include "pwm.h"
 #include "timer.h"
 
+// Pin 4
+// #define EncoderAOutput PG5
+// Pin 3
+// #define EncoderBOutput PE5
+
 void initPWMTimer3()
 {
     // Timer 3A, on pin 3 on the board

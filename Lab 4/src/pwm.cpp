@@ -75,3 +75,4 @@ void initPWMTimer4()
 
     // The last thing is to set the duty cycle.
     OCR4A = 0;
+}
