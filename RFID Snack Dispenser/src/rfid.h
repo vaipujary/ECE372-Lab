@@ -7,5 +7,6 @@ extern MFRC522 mfrc522;
 
 void initRFID();
 int readRFID();
+bool isAuthorized(int rfidUID);
 
 #endif

@@ -10,6 +10,11 @@
 
 #include "rfid.h"
 #include "spi.h"
+#define UID_LIST_SIZE 2
+
+int Authorized_UID_list[UID_LIST_SIZE] = {609, 359};
+// Vaidehi card: 609, tag: 359
+// Logan card: 638, tag: 353
 
 void initRFID()
 {
@@ -24,14 +29,14 @@ int readRFID()
     // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
     if (!mfrc522.PICC_IsNewCardPresent())
     {
-        Serial.println("WTF");
+        Serial.println("New card not present");
         return 0;
     }
 
     // Select one of the cards
     else if (!mfrc522.PICC_ReadCardSerial())
     {
-        Serial.println("WTF2");
+        Serial.println("Cannot read card");
         return 0;
     }
 
@@ -45,4 +50,16 @@ int readRFID()
     Serial.println(num);
     Serial.println("Hello");
     return (num);
+}
+
+bool isAuthorized(int rfidUID)
+{
+    for (int i = 0; i < UID_LIST_SIZE; i++)
+    {
+        if (rfidUID == Authorized_UID_list[i] && rfidUID != 0)
+        {
+            return true;
+        }
+    }
+    return false;
 }

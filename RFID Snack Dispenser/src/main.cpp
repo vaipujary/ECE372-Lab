@@ -31,14 +31,12 @@
 // Global variables and macros
 #define RST_PIN 49 // Configurable, see typical pin layout above
 #define SS_PIN 53  // Configurable, see typical pin layout above
-#define UID_LIST_SIZE 10
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
 int rfidUID = 0;
-int Authorized_UID_list[UID_LIST_SIZE] = {609, 359};
-// Vaidehi card: 609, tag: 359
-// Logan card: 638, tag: 353
+
+unsigned int result = 0;
 
 typedef enum
 {
@@ -66,13 +64,12 @@ int main(void)
     initPWMTimer3();
     // moveCursor(0, 0); // moves the cursor to 0,0 position
     // writeString("Snack Dispenser");
-    rfidUID = readRFID();
-    Serial.print("Main function The UID is: ");
-    Serial.println(rfidUID);
-
     while (1)
     {
 
+        rfidUID = readRFID();
+        Serial.print("Main function The UID is: ");
+        Serial.println(rfidUID);
         // Button state machine logic
         // switch (myButtonState)
         // {
@@ -110,18 +107,22 @@ int main(void)
 
         if (operationMode == normal) // Dispense snacks, turn green LEDs on, display success message on lcd
         {
-            for (int i = 0; i < UID_LIST_SIZE; i++)
+            changeDutyCycle(512);
+            if (isAuthorized(rfidUID))
             {
-                // User is authorized, activate the motor
-                if (rfidUID == Authorized_UID_list[i] && rfidUID != 0)
+                // Dispense the snacks. Motor moves counterclockwise by default
+                Serial.println("RFID UID Authorized!");
+                // result = ADCL;
+                // result += ((unsigned int)ADCH) << 8;
+                for (int i = 0; i < 512; i++)
                 {
-                    Serial.println("RFID UID Authorized!");
-
-                    motorCCW(); // Dispense the snacks. // Have to adjust direction of rotation based on experimentation.
-                    // moveCursor(0, 0); // moves the cursor to 0,0 position
-                    // writeString("Enjoy the snacks!");
-                    delayMs(1000);
+                    changeDutyCycle(i);
+                    Serial.println(i);
                 }
+                //     moveCursor(0, 0); // moves the cursor to 0,0 position
+                //     writeString("Enjoy the snacks!");
+                //    delayMs(1000);
+                rfidUID = readRFID(); // Get updated reading of UID
             }
         }
         else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
