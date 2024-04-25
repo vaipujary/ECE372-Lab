@@ -35,8 +35,7 @@ int readRFID()
         return 0;
     }
 
-    // Dump debug info about the card; PICC_HaltA() is automatically called
-    // UID
+    // UID extraction
     int num = 0;
     Serial.print("RFID Function Card UID: ");
     for (byte i = 0; i < mfrc522.uid.size; i++)

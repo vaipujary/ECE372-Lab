@@ -61,8 +61,9 @@ int main(void)
     initSPI();          // Initialize SPI communication
     initRFID();         // Initialize RFID module
     // initSwitchPD0();    // Initialize switch
-    // initTimer1();       // Initialize timer
+    initTimer1(); // Initialize timers
     initTimer0();
+    initPWMTimer3();
     // moveCursor(0, 0); // moves the cursor to 0,0 position
     // writeString("Snack Dispenser");
     rfidUID = readRFID();
@@ -125,8 +126,9 @@ int main(void)
         }
         else // Emergency operation mode. Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
         {
-            moveCursor(0, 0); // moves the cursor to 0,0 position
-            writeString("Snack thief alert!");
+            Serial.println("Snack thief alert!");
+            // moveCursor(0, 0); // moves the cursor to 0,0 position
+            // writeString("Snack thief alert!");
         }
     }
 }

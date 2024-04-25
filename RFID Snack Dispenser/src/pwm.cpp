@@ -19,7 +19,7 @@ void initPWMTimer3()
     // Set DDR for output
     // Mode 15: OCR3A set as top value
     // OCR1C for output compare
-    // Output pin: PE5 (pin3)
+    // Output pin: PE5 (pin 3)
     DDRE |= (1 << DDE5);
 
     // Set pins for non-inverting timer: COM3C1 = 1, COM3C0 = 0 (located in TCCR3A register)
