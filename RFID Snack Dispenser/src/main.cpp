@@ -71,39 +71,39 @@ int main(void)
         Serial.print("Main function The UID is: ");
         Serial.println(rfidUID);
         // Button state machine logic
-        // switch (myButtonState)
-        // {
-        //     ///////////////////////////////Press States/////////////////////////////////////////
-        // case waitPress: // the "natural" state
-        //     // Do nothing, wait for button to be pressed
-        //     Serial.println("waitPress");
-        //     break;
+        switch (myButtonState)
+        {
+            ///////////////////////////////Press States/////////////////////////////////////////
+        case waitPress: // the "natural" state
+            // Do nothing, wait for button to be pressed
+            Serial.println("waitPress");
+            break;
 
-        // case debouncePress: // Debounce Press state, wait for switch debounce state to end
-        //     Serial.println("debouncePress");
-        //     Serial.flush();
-        //     delayMs(1);
-        //     myButtonState = waitRelease;
-        //     break;
+        case debouncePress: // Debounce Press state, wait for switch debounce state to end
+            Serial.println("debouncePress");
+            Serial.flush();
+            delayMs(1);
+            myButtonState = waitRelease;
+            break;
 
-        // ///////////////////////////////Release States///////////////////////////////
-        // case waitRelease: // waits for button to be released after pressed
-        //     Serial.println("waitRelease");
-        //     Serial.flush();
-        //     delayMs(1);
+        ///////////////////////////////Release States///////////////////////////////
+        case waitRelease: // waits for button to be released after pressed
+            Serial.println("waitRelease");
+            Serial.flush();
+            delayMs(1);
 
-        //     break;
+            break;
 
-        // case debounceRelease:
-        //     Serial.println("debounceRelease");
-        //     Serial.flush();
-        //     delayMs(1);
-        //     myButtonState = waitPress;
-        //     break;
+        case debounceRelease:
+            Serial.println("debounceRelease");
+            Serial.flush();
+            delayMs(1);
+            myButtonState = waitPress;
+            break;
 
-        // default:
-        //     break;
-        // }
+        default:
+            break;
+        }
 
         if (operationMode == normal) // Dispense snacks, turn green LEDs on, display success message on lcd
         {
