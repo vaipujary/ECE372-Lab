@@ -76,7 +76,7 @@ int main(void)
         ///////////////////////////////Press States/////////////////////////////////////////
         case waitPress: // the "natural" state
             // Do nothing, wait for button to be pressed
-            Serial.println("waitPress!!!!!");
+            Serial.println("waitPress");
             break;
 
         case debouncePress: // Debounce Press state, wait for switch debounce state to end
@@ -87,7 +87,7 @@ int main(void)
 
         ///////////////////////////////Release States///////////////////////////////
         case waitRelease: // waits for button to be released after pressed
-            Serial.println("waitRelease!!!!!!!!");
+            Serial.println("waitRelease");
             break;
 
         case debounceRelease:
@@ -115,7 +115,6 @@ int main(void)
                 }
                 moveCursor(1, 0); // moves the cursor to 0,0 position
                 writeString("Enjoy the snacks!");
-                //    delayMs(1000);
                 rfidUID = readRFID(); // Get updated reading of UID
                 changeDutyCycle(512);
             }
