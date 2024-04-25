@@ -118,24 +118,9 @@ int main()
     read_From(SLA, ZOUT_LOW);
     z = (z << 8) | read_Data();
 
-    /*Serial.print("x: " + String(x) + "\n");
+    Serial.print("x: " + String(x) + "\n");
     Serial.print("y: " + String(y) + "\n");
-    Serial.print("z: " + String(z) + "\n");*/
-
-    // Check thresholds of accelerometer: if above threshold, display frown
-    if ((y < 0) || (y > 7000) || (z <= 12500))
-    {
-      LEDState = LEDSAD;
-       for (int i = 1000; i < 4000; i++)
-      {
-        changeFrequency(i);
-      }
-    }
-    // Else, display smiley face
-    else
-    {
-      LEDState = LEDSMILEY;
-    }
+    Serial.print("z: " + String(z) + "\n");
 
     //threshold check
     if ((x >=8000) || (x <= -8000) || (z <= 13000)) {
@@ -156,10 +141,6 @@ int main()
       if (!(PIND & (1 << PD2))) {
         alarmOff();
       }
-    case waitPress:
-      Serial.println("waitPress");
-      myButtonState = waitPress;
-      delayMs(1);
       break;
 
     case debouncePress: // Debounce Press state, wait for swithc debounce state to end
@@ -167,24 +148,17 @@ int main()
       Serial.flush();
       delayMs(1);
       alarmOff();
-      for (int i = 1000; i < 4000; i++)
-      {
-        changeFrequency(i);
-      }
       myButtonState = waitRelease;
       break;
 
     ///////////////////////////////Release States///////////////////////////////
     case waitRelease: // waits for button to be released after pressed
       Serial.println("waitRelease");
+      Serial.flush();
       delayMs(1);
       alarmOff();
       if (PIND & (1 << PD2)) {
         myButtonState = debounceRelease;
-      }
-      for (int i = 1000; i < 4000; i++)
-      {
-        changeFrequency(i);
       }
       break;
 
