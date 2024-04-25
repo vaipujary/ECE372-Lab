@@ -238,7 +238,7 @@ int main()
 }
 
 // Interrupt Service Routine
-ISR(INT2_vect)
+ISR(PCINT2_vect)
 {
   if (myButtonState == waitPress)
   {
