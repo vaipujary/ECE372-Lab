@@ -48,7 +48,6 @@ int readRFID()
         num = num + mfrc522.uid.uidByte[i];
     }
     Serial.println(num);
-    Serial.println("Hello");
     return (num);
 }
 

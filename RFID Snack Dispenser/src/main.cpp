@@ -79,7 +79,6 @@ int main(void)
 
         case debouncePress: // Debounce Press state, wait for switch debounce state to end
             Serial.println("debouncePress");
-            Serial.flush();
             delayMs(1);
             myButtonState = waitRelease;
             break;
@@ -87,14 +86,12 @@ int main(void)
         ///////////////////////////////Release States///////////////////////////////
         case waitRelease: // waits for button to be released after pressed
             Serial.println("waitRelease");
-            Serial.flush();
             delayMs(1);
 
             break;
 
         case debounceRelease:
             Serial.println("debounceRelease");
-            Serial.flush();
             delayMs(1);
             myButtonState = waitPress;
             break;
@@ -112,12 +109,10 @@ int main(void)
             {
                 // Dispense the snacks. Motor moves counterclockwise by default
                 Serial.println("RFID UID Authorized!");
-                // result = ADCL;
-                // result += ((unsigned int)ADCH) << 8;
+
                 for (int i = 0; i < 512; i++)
                 {
-                    changeDutyCycle(i);
-                    Serial.println(i);
+                    changeDutyCycle(0);
                 }
                 //     moveCursor(0, 0); // moves the cursor to 0,0 position
                 //     writeString("Enjoy the snacks!");
@@ -139,7 +134,7 @@ int main(void)
 }
 
 // Interrupt Service Routine
-ISR(PCINT0_vect)
+ISR(INT2_vect)
 {
     Serial.println("Button pressed!");
 
@@ -155,11 +150,13 @@ ISR(PCINT0_vect)
 
         if (operationMode == normal)
         {
+            Serial.println("Normal to emergency mode");
             operationMode = emergency;
         }
 
         else
         {
+            Serial.println("Normal mode ISR");
             operationMode = normal;
         }
     }
