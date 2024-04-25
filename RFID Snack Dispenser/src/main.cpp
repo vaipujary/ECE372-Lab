@@ -74,7 +74,7 @@ int main(void)
             ///////////////////////////////Press States/////////////////////////////////////////
         case waitPress: // the "natural" state
             // Do nothing, wait for button to be pressed
-            Serial.println("waitPress");
+            Serial.println("waitPress!!!!!");
             break;
 
         case debouncePress: // Debounce Press state, wait for switch debounce state to end
@@ -85,9 +85,7 @@ int main(void)
 
         ///////////////////////////////Release States///////////////////////////////
         case waitRelease: // waits for button to be released after pressed
-            Serial.println("waitRelease");
-            delayMs(1);
-
+            Serial.println("waitRelease!!!!!!!!");
             break;
 
         case debounceRelease:
@@ -135,6 +133,7 @@ int main(void)
 
 // Interrupt Service Routine
 ISR(INT2_vect)
+ISR(INT2_vect)
 {
     Serial.println("Button pressed!");
 
@@ -150,13 +149,13 @@ ISR(INT2_vect)
 
         if (operationMode == normal)
         {
-            Serial.println("Normal to emergency mode");
+            Serial.println("ENTERING EMERGENCY MODE");
             operationMode = emergency;
         }
 
         else
         {
-            Serial.println("Normal mode ISR");
+            Serial.println("ENTERING NORMAL MODE");
             operationMode = normal;
         }
     }
