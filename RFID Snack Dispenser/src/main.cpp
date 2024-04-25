@@ -34,9 +34,7 @@
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
-int rfidUID = 0;
-
-unsigned int result = 0;
+int rfidUID = 0; // Variable to store RFID UID
 
 typedef enum
 {
@@ -58,8 +56,8 @@ int main(void)
     Serial.begin(9600); // Initialize serial port
     initSPI();          // Initialize SPI communication
     initRFID();         // Initialize RFID module
-    // initSwitchPD0();    // Initialize switch
-    initTimer1(); // Initialize timers
+    initSwitchPD0();    // Initialize switch
+    initTimer1();       // Initialize timers
     initTimer0();
     initPWMTimer3();
     // moveCursor(0, 0); // moves the cursor to 0,0 position
