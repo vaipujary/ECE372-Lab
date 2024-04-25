@@ -2,8 +2,8 @@
 #define PWM_H
 
 void initPWMTimer3();
-void changeDutyCycle(double direction);
-void changeFrequency(unsigned int i);
+void changeDutyCycle(double motorDirection);
+void changeFrequency(unsigned int frequencyValue);
 void motorCW();
 void motorCCW();
 
