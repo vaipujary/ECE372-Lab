@@ -60,7 +60,7 @@ int main(void)
     initTimer1();       // Initialize timers
     initTimer0();
     initPWMTimer3();
-    initLCD();
+    initLCD();        /// Initialize LCD
     moveCursor(0, 0); // moves the cursor to 0,0 position
     writeString("Snack Dispenser");
 
