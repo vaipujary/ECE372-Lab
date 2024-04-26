@@ -14,6 +14,7 @@
 #include "pwm.h"
 #include "switch.h"
 #include "lcd.h"
+#include "led.h"
 #include <stdio.h>
 
 /*
@@ -60,7 +61,8 @@ int main(void)
     initTimer1();       // Initialize timers
     initTimer0();
     initPWMTimer3();
-    initLCD();        /// Initialize LCD
+    initLCD();        // Initialize LCD
+    initLED();        // Initialize LEDs
     moveCursor(0, 0); // moves the cursor to 0,0 position
     writeString("Snack Dispenser");
 
@@ -104,6 +106,8 @@ int main(void)
         if (operationMode == normal) // Dispense snacks, turn green LEDs on, display success message on lcd
         {
             Serial.println("Normal operation mode");
+            turnOnGreenLED();
+            turnOffRedLED();
             if (isAuthorized(rfidUID))
             {
                 // Dispense the snacks. Motor moves counterclockwise by default
@@ -124,6 +128,8 @@ int main(void)
         else // Someone is stealing snacks. Stop motor, turn red LEDs on, display error message on lcd
         {
             Serial.println("!!!Emergency operation mode!!!");
+            turnOnRedLED();
+            turnOffGreenLED();
             changeDutyCycle(512);
             delayMs(1000);
             moveCursor(1, 0); // moves the cursor to 0,0 position
