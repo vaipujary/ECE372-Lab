@@ -47,6 +47,7 @@ typedef enum
     emergency
 } state;
 
+// Define state variables
 volatile state myButtonState = waitPress;
 volatile state operationMode = normal;
 
@@ -113,11 +114,11 @@ int main(void)
                 // Dispense the snacks. Motor moves counterclockwise by default
                 Serial.println("RFID UID Authorized!");
 
-                for (int i = 0; i < 512; i++)
+                for (int i = 0; i < 1000; i++)
                 {
                     changeDutyCycle(0);
                 }
-                moveCursor(1, 0); // moves the cursor to 0,0 position
+                moveCursor(1, 0); // Moves the cursor to 1,0 position
                 writeString("Enjoy the snacks!");
                 rfidUID = readRFID(); // Get updated reading of UID
                 changeDutyCycle(512);
@@ -132,7 +133,7 @@ int main(void)
             turnOffGreenLED();
             changeDutyCycle(512);
             delayMs(1000);
-            moveCursor(1, 0); // moves the cursor to 0,0 position
+            moveCursor(1, 0); // Moves the cursor to 1,0 position
             writeString("Snack thief!!!!!");
         }
     }
