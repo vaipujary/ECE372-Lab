@@ -10,7 +10,7 @@
 
 #include "rfid.h"
 #include "spi.h"
-#define UID_LIST_SIZE 2
+#define UID_LIST_SIZE 3
 
 int Authorized_UID_list[UID_LIST_SIZE] = {609, 359};
 // Vaidehi card: 609, tag: 359
