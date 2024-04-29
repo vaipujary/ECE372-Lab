@@ -113,11 +113,9 @@ int main(void)
                 Serial.println("RFID UID Authorized!");
                 turnOnGreenLED();
                 turnOffRedLED();
-
-                for (int i = 0; i < 1000; i++)
-                {
-                    changeDutyCycle(0);
-                }
+                changeDutyCycle(0);
+                delayMs(1000);
+                changeDutyCycle(512);
                 moveCursor(1, 0); // Moves the cursor to 1,0 position
                 writeString("Enjoy the snacks!");
                 changeDutyCycle(512);
