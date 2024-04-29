@@ -1,3 +1,13 @@
+// Authors:     Group 3 Alicia Enriquez, Vaidehi Pujary, Logan Stonehouse, Jake Weithas
+// Date:        04/25/2024
+// Project:     RFID Snack Dispenser
+//
+// Description: This file handles the initialization of the two LEDs on the board. The green LED turns on when
+// an authorized user accesses the snacks. The red LED turns on when an unauthorized user accesses the snacks.
+// Both LEDs are off by default.
+
+//----------------------------------------------------------------------//
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include "led.h"
@@ -9,30 +19,30 @@ void initLED()
     DDRE |= (1 << DDE4) | (1 << DDE5);
 }
 
-// turns on the Red LED
+// Turns on the Red LED
 void turnOnRedLED()
 {
-    // header pin 2
+    // Header pin 2
     PORTE |= (1 << PORTE4);
 }
 
-// turns on the Green LED
+// Turns on the Green LED
 void turnOnGreenLED()
 {
-    // header pin 3
+    // Header pin 3
     PORTE |= (1 << PORTE5);
 }
 
-// turns off the Red LED
+// Turns off the Red LED
 void turnOffRedLED()
 {
-    // header pin 2
+    // Header pin 2
     PORTE &= ~(1 << PORTE4);
 }
 
-// turns off the Green LED
+// Turns off the Green LED
 void turnOffGreenLED()
 {
-    // header pin 3
+    // Header pin 3
     PORTE &= ~(1 << PORTE5);
 }

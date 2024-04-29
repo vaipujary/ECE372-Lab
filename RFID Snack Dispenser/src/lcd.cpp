@@ -1,3 +1,9 @@
+// Authors:     Group 3 Alicia Enriquez, Vaidehi Pujary, Logan Stonehouse, Jake Weithas
+// Date:        04/25/2024
+// Project:     RFID Snack Dispenser
+//
+// Description: This file handles the display of messages on the LCD display. It initializes the pins on the board
+// connected to the LCD and includes function to display characters and words on it
 
 //----------------------------------------------------------------------//
 #include "lcd.h"

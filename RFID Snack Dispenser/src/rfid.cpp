@@ -2,10 +2,8 @@
 // Date:        04/25/2024
 // Project:     RFID Snack Dispenser
 //
-// Description:
-//
-// Requirements:
-
+// Description: This file handles the initialization of the RFID, parsing the UID of the RFID tag/card, and checking
+// if a certain UID is authorized.
 //----------------------------------------------------------------------//
 
 #include "rfid.h"
@@ -18,12 +16,12 @@ int Authorized_UID_list[UID_LIST_SIZE] = {609, 359};
 
 void initRFID()
 {
-    // SPI.begin();			// Init SPI bus
     mfrc522.PCD_Init();                // Init MFRC522
-    delayMs(4);                        // Optional delay. Some board do need more time after init to be ready, see Readme
+    delayMs(4);                        // Optional delay. Some board do need more time after init to be ready
     mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD - MFRC522 Card Reader details
 }
 
+// Function to read in an RFID card/tag's unique identification number
 int readRFID()
 {
     // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
@@ -40,16 +38,18 @@ int readRFID()
         return 0;
     }
 
-    // UID extraction
+    // UID extraction: converting UID bytes to an integer for readability and ease of manipulation
     int num = 0;
-    // Serial.print("RFID Function Card UID: ");
+
     for (byte i = 0; i < mfrc522.uid.size; i++)
     {
         num = num + mfrc522.uid.uidByte[i];
     }
-    return (num);
+
+    return num;
 }
 
+// Function to check if the user's RFID UID is authorized
 bool isAuthorized(int rfidUID)
 {
     for (int i = 0; i < UID_LIST_SIZE; i++)

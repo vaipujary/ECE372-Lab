@@ -2,16 +2,14 @@
 // Date:        04/25/2024
 // Project:     RFID Snack Dispenser
 //
-// Description:
-//
-// Requirements:
-
+// Description: This file handles the SPI communication of the microcontroller with the RFID module.
 //----------------------------------------------------------------------//
 
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include "spi.h"
 
+// Define macros
 #define DDR_SPI DDRB      // Data Direction Register on ATMEGA2560 for SPI is DDRB
 #define DD_SS DDB0        // SS Chip Select data direction bit B0 of ATMEGA2560 is DDB0 (Pin 53)
 #define DD_SCK DDB1       // Clock pin connection data direction bit B1 on ATMEGA2560 is DDB1 (Pin 52)
@@ -24,6 +22,7 @@
     while (!(SPSR & (1 << SPIF))) \
         ;
 
+// Function to initialize SPI connections
 void initSPI()
 {
     // set MOSI,SCK,and SS direction to outputs

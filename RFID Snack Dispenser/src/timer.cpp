@@ -2,38 +2,41 @@
 // Date:        04/25/2024
 // Project:     RFID Snack Dispenser
 //
-// Description:
-//
-// Requirements:
-//
+// Description: This file handles the timers (Timer 0 and 1) and delays (delayMs) used in the project.
+
 //----------------------------------------------------------------------//
 
 #include "timer.h"
 
-void initTimer1(){
-	// CTC setting in the timer register
+void initTimer1()
+{
+    // CTC setting in the timer register
     TCCR1A &= ~(1 << WGM10);
     TCCR1A &= ~(1 << WGM11);
     TCCR1B |= (1 << WGM12);
     TCCR1B &= ~(1 << WGM13);
 
-    OCR1A = 2;                // 1ms timer at a prescalar of 8, CTC compare value
+    OCR1A = 2; // 1ms timer at a prescalar of 8, CTC compare value
 }
 
 /* This delays the program an amount of microseconds specified by unsigned int delay.
-*/
-void delayUs(unsigned int delay){
+ */
+void delayUs(unsigned int delay)
+{
     unsigned int count = 0;
 
     // Turns on clock sets the prescaler bits to 8 (010)
     TCCR1B &= (1 << CS10) | (1 << CS12);
     TCCR1B |= (1 << CS11);
 
-    while (count < delay) {         // 1 ms Delay
-        TCNT1 = 0;                  // starting timer at 0
-        TIFR1 |= (1 << OCF1A);      // set compare flag to start timer
+    while (count < delay)
+    {                          // 1 ms Delay
+        TCNT1 = 0;             // starting timer at 0
+        TIFR1 |= (1 << OCF1A); // set compare flag to start timer
 
-        while (! (TIFR1 & (1 << OCF1A))) {};
+        while (!(TIFR1 & (1 << OCF1A)))
+        {
+        };
 
         count++;
     }

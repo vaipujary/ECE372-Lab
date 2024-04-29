@@ -2,10 +2,8 @@
 // Date:        04/25/2024
 // Project:     RFID Snack Dispenser
 //
-// Description:
-//
-// Requirements:
-
+// Description: This is the main file that handles the operation of the snack dispenser, tying in the functionality
+// of the RFID module, motor, LEDs, LCD, and switch.
 //----------------------------------------------------------------------//
 #include <MFRC522.h>
 #include "rfid.h"
@@ -154,15 +152,12 @@ int main(void)
             turnOnRedLED();
             turnOffGreenLED();
             changeDutyCycle(512);
-            // delayMs(1000);
             moveCursor(1, 0); // Moves the cursor to 1,0 position
             writeString("Snack thief!!!!!");
             rfidUID = readRFID(); // Get updated reading of UID
             Serial.print("The UID is: ");
             Serial.println(rfidUID);
         }
-
-        // delayMs(1000);
     }
 }
 
