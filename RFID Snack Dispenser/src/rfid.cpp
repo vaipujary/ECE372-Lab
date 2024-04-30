@@ -17,7 +17,7 @@ int Authorized_UID_list[UID_LIST_SIZE] = {609, 359};
 void initRFID()
 {
     mfrc522.PCD_Init();                // Init MFRC522
-    delayMs(4);                        // Optional delay. Some board do need more time after init to be ready
+    delayMs(0.5);                      // Optional delay. Some board do need more time after init to be ready
     mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD - MFRC522 Card Reader details
 }
 
